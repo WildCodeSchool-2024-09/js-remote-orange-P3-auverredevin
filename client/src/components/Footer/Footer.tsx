@@ -9,7 +9,7 @@ function Footer() {
             <a href="/vins">NOS VINS</a>
           </li>
           <li>
-            <a href="/degustation">DEGUSTATION</a>
+            <a href="/salons">SALONS</a>
           </li>
           <li>
             <a href="/mesreservations">MES RESERVATIONS</a>
