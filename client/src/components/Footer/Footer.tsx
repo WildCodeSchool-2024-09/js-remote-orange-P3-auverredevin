@@ -1,4 +1,6 @@
 import "./Footer.css";
+import { Link } from "react-router-dom";
+
 
 function Footer() {
   return (
@@ -18,7 +20,7 @@ function Footer() {
             <a href="/quizz">QUIZZ</a>
           </li>
           <li>
-            <a href="/connexion">SE CONNECTER</a>
+            <Link to="/Connexion">SE CONNECTER</Link>
           </li>
         </ul>
       </nav>
