@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Roboto";
-  src: url("../src/assets/Font/Roboto.ttf") format("Roboto");
+  src: url("../src/assets/Font/Roboto.ttf") format("truetype");
   font-style: normal;
   font-weight: bold;
 }
@@ -19,17 +19,16 @@ h4 {
 
 h1 {
   color: #9f0c00;
+  font-size: 3rem;
 }
 
 .button-quizz {
   background-color: #9f0c00;
-  width: 10em;
-  height: 3em;
-  border-radius: 2em;
-  font-size: 2em;
-  border: black 6px solid;
-  /* font-family: "Roboto";
-font-weight: bold; */
+  width: 20vw;
+  height: 7vh;
+  border-radius: 2vh;
+  font-size: 1.5rem;
+  border: black 4px solid;
 }
 
 .main {
@@ -37,7 +36,7 @@ font-weight: bold; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 5em;
+  margin-top: 5vh;
 }
 
 .nav-buttons {
@@ -45,25 +44,26 @@ font-weight: bold; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 2em;
+  margin-top: 3vh;
 }
 
 .button-vin,
 .button-degustation,
 .button-francais {
-  font-size: xx-large;
-  border-radius: 1em;
-  width: 40%;
-  height: 35%;
+  font-size: 1.5rem;
+  border-radius: 1vh;
+  width: 80%;
+  height: auto;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0.5em;
-  border: #88001b 3px solid;
+  margin: 1vh 0;
+  border: #88001b 2px solid;
 }
 
 .button-francais {
-  margin-bottom: 1.5em;
+  margin-bottom: 2vh;
 }
 
 section {
@@ -71,25 +71,92 @@ section {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 2em;
+  margin-top: 3vh;
 }
 
 .button-vins {
   background-color: #9f0c00;
-  width: 10em;
-  height: 3em;
-  border-radius: 2em;
-  font-size: 2em;
-  border: black 6px solid;
+  width: 20vw;
+  height: 7vh;
+  border-radius: 2vh;
+  font-size: 1.5rem;
+  border: black 4px solid;
 }
 
 .degustation,
 .raisin,
 .Francais {
-  width: 10em;
-  height: 10em;
+  width: 10vw;
+  height: 10vw;
 }
 
 p {
-  font-size: 14px;
+  font-size: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .button-quizz,
+  .button-vins {
+    width: 70%;
+    height: auto;
+    font-size: 1.2rem;
+  }
+
+  .button-vin,
+  .button-degustation,
+  .button-francais {
+    font-size: 1rem;
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .degustation,
+  .raisin,
+  .Francais {
+    width: 20vw;
+    height: 20vw;
+  }
+
+  .main {
+    margin-top: 3vh;
+  }
+
+  .nav-buttons {
+    margin-top: 2vh;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .button-quizz,
+  .button-vins {
+    width: 80%;
+    font-size: 1rem;
+  }
+
+  .button-vin,
+  .button-degustation,
+  .button-francais {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+
+  .degustation,
+  .raisin,
+  .Francais {
+    width: 30vw;
+    height: 30vw;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
 }

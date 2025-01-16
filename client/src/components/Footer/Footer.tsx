@@ -6,7 +6,7 @@ function Footer() {
       <nav className="nav_footer">
         <ul className="ul_footer">
           <li>
-            <a href="/nosvins">NOS VINS</a>
+            <a href="/vins">NOS VINS</a>
           </li>
           <li>
             <a href="/degustation">DEGUSTATION</a>

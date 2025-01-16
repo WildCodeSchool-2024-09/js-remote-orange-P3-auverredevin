@@ -1,6 +1,6 @@
-import "./connexion.css";
+import "./inscription.css";
 
-function Connexion() {
+function Inscription() {
   return (
     <div className="connecter">
       <div className="logo">
@@ -9,7 +9,7 @@ function Connexion() {
 
       <h1>SE CONNECTER</h1>
 
-      <div className="avatar"></div>
+      <div className="avatar" />
 
       <form className="case">
         <input type="text" placeholder="Prénom" />
@@ -41,4 +41,4 @@ function Connexion() {
   );
 }
 
-export default Connexion;
+export default Inscription;
