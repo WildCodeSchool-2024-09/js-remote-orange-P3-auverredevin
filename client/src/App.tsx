@@ -1,4 +1,3 @@
-
 import Accueil from "./pages/Accueil/Accueil";
 
 function App() {

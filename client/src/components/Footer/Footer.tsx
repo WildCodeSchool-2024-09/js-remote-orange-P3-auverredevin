@@ -1,12 +1,10 @@
-import "./Footer.css";
+import "./footer.css";
 
 function Footer() {
   return (
-
     <div className="div_footer">
       <nav className="nav_footer">
         <ul className="ul_footer">
-
           <li>
             <a href="/vins">NOS VINS</a>
           </li>
