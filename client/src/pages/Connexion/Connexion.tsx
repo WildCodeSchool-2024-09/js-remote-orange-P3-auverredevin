@@ -45,9 +45,20 @@ function Connexion() {
       <Container
         id="signInModule"
         maxWidth="sm"
-        sx={{ display: "flex", flexDirection: "column", backgroundColor: "#f5f5f5", mt: 5  }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: "#f5f5f5",
+          mt: 5,
+        }}
       >
-        <Typography variant="h4" component="h1" gutterBottom color= "black" sx={{ mt: 2, textAlign: "center" }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          gutterBottom
+          color="black"
+          sx={{ mt: 2, textAlign: "center" }}
+        >
           Se connecter
         </Typography>
         {message && <div style={{ color: "red" }}>{message}</div>}
