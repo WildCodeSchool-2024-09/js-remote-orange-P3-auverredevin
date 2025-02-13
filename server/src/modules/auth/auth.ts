@@ -62,7 +62,7 @@ const Check: RequestHandler = async (req, res, next) => {
     const user: { token?: string } = await usersRepository.read(decoded.id);
 
     return res.status(200).send({ check: true, user: user });
-    console.log(user, check);
+
   });
 };
 
