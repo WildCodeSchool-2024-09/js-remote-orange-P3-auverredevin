@@ -10,7 +10,7 @@ interface Quizz {
 
 function Quizz() {
   useEffect(() => {
-    fetch("http://localhost:3310/api/questions")
+    fetch("http://localhost:3310/api/question")
       .then((response) => response.json())
       .then((data) => {
         data;

@@ -4,6 +4,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import SuggestionVin from "../../components/Suggestion/Suggestion";
 import "./ListeVin.css";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
