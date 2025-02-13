@@ -75,8 +75,8 @@ CREATE TABLE answers (
     answer_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     question_id INT NOT NULL,
     answer_text TEXT NOT NULL,
-    score_value INT NOT NULL, -- Score de la reponse
-    CONSTRAINT fk_question FOREIGN KEY (question_id) REFERENCES questions(question_id)
+    score_value INT NOT NULL, -- Score de la réponse
+    FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_answers (
@@ -84,12 +84,13 @@ CREATE TABLE user_answers (
     user_id INT NOT NULL,
     question_id INT NOT NULL,
     answer_id INT NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user(user_id),
-    CONSTRAINT fk_question_2 FOREIGN KEY (question_id) REFERENCES questions(question_id),
-    CONSTRAINT fk_answer FOREIGN KEY (answer_id) REFERENCES answers(answer_id)
+    answer_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Ajout de la date de réponse
+    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE,
+    FOREIGN KEY (answer_id) REFERENCES answers(answer_id) ON DELETE CASCADE
 );
 
-CREATE TABLE taste_profiles (
+CREATE TABLE taste_profiles (  -- N'est pas utilisée dans le projet final
     profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     min_score INT NOT NULL,
     max_score INT NOT NULL,
@@ -101,9 +102,11 @@ CREATE TABLE user_scores (
     user_id INT NOT NULL,
     total_score INT NOT NULL,
     taste_profile_id INT,  -- Clé étrangère vers la table taste_profiles
-    CONSTRAINT fk_user_score FOREIGN KEY (user_id) REFERENCES user(user_id),
-    CONSTRAINT fk_taste_profile FOREIGN KEY (taste_profile_id) REFERENCES taste_profiles(profile_id)
+    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (taste_profile_id) REFERENCES taste_profiles(profile_id)
 );
+
+CREATE INDEX idx_user_question ON user_answers (user_id, question_id);
 
 CREATE TABLE wine_filters (
     filter_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
