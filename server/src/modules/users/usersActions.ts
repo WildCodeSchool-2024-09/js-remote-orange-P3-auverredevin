@@ -115,4 +115,31 @@ const destroy: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, add, edit, destroy };
+// Nouvelle fonction pour récupérer le login de l'utilisateur connecté
+const getLogin: RequestHandler = async (req, res, next) => {
+  try {
+    // Récupérer l'ID de l'utilisateur depuis la session ou les cookies
+    const userId = req.session.userId; // Si vous utilisez des sessions
+    // OU
+    // const userId = req.user?.id; // Si vous utilisez Passport.js ou un middleware d'authentification
+
+    if (!userId) {
+      return res.status(401).json({ error: "Utilisateur non authentifié" });
+    }
+
+    // Récupérer l'utilisateur depuis la base de données
+    const user = await userRepository.read(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
+    }
+
+    // Renvoyer le login de l'utilisateur
+    res.status(200).json({ login: user.login });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Exporter toutes les fonctions, y compris la nouvelle fonction getLogin
+export default { browse, read, add, edit, destroy, getLogin };

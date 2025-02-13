@@ -35,6 +35,7 @@ router.get("/api/users/:id", userActions.read);
 router.post("/api/users", userActions.add);
 router.put("/api/users/:id", userActions.edit);
 router.delete("/api/users/:id", userActions.destroy);
+router.get("/api/user/login", userActions.read);
 
 router.post("/api/auth/signin", SignIn.SignIn);
 router.post("/api/auth/signup", SignIn.SignUp);
