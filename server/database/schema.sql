@@ -243,17 +243,19 @@ INSERT INTO opinion (note, description, wine_id, user_id) VALUES
 (5.0, "Un vin riche et complexe. Parfait pour les grandes occasions.", 20, 5);
 
 INSERT INTO questions (question_text) VALUES
-("Quel niveau d'acidité aimez-vous dans un vin ?"),
+("Quel type de vin préférez-vous ?"),
 ("Préférez-vous un vin léger ou puissant ?"),
 ("Quel arôme recherchez-vous dans un vin ?"),
-("Préférez-vous un vin sec ou sucré ?"),
-("Quel type de vin préférez vous?");
+("Avec quel plat allez-vous accompagner ce vin ?"),
+("Quel est votre budget approximatif ?");
 
--- Question 1 : Quel niveau d'acidité aimez-vous dans un vin ?
+
+-- Question 1 : Quel type de vin préférez-vous ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
-(1, 'Faible acidité', 1),
-(1, 'Acidité modérée', 2),
-(1, 'Acidité élevée', 3);
+(1, 'Rouge', 1),
+(1, 'Blanc', 2),
+(1, 'Rosé', 3),
+(1, 'Pétillant', 4);
 
 -- Question 2 : Préférez-vous un vin léger ou puissant ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
@@ -264,21 +266,23 @@ INSERT INTO answers (question_id, answer_text, score_value) VALUES
 -- Question 3 : Quel arôme recherchez-vous dans un vin ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
 (3, 'Fruité', 1),
-(3, 'Épicé', 2),
-(3, 'Boisé', 3),
-(3, 'Floral', 4);
+(3, 'Sec', 2),
+(3, 'Sucré', 3),
+(3, 'Boisé', 4);
 
--- Question 4 : Préférez-vous un vin sec ou sucré ?
+-- Question 4 : Avec quel plat allez-vous accompagner ce vin ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
-(4, 'Sec', 1),
-(4, 'Demi-sec', 2),
-(4, 'Sucré', 3);
+(4, 'Viande rouge', 1),
+(4, 'Poisson ou fruits de mer', 2),
+(4, 'Fromage', 3),
+(4, 'Dessert sucré', 4);
 
--- Question 5 : Quel type de vin préférez-vous ?
+-- Question 5 : Quel est votre budget approximatif ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
-(5, 'Rouge', 1),
-(5, 'Blanc', 2),
-(5, 'Rosé', 3);
+(5, 'Moins de 10€', 1),
+(5, 'Entre 10 et 20€', 2),
+(5, 'Entre 20 et 50€', 3),
+(5, 'Plus de 50€', 4);
 
 -- Réponses des utilisateurs
 
