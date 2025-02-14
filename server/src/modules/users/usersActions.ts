@@ -1,7 +1,8 @@
 import type { RequestHandler } from "express";
 import userRepository from "./usersRepository";
 
-interface User {
+interface UserProps {
+  id: number;
   user_id: number;
   firstname: string;
   lastname: string;

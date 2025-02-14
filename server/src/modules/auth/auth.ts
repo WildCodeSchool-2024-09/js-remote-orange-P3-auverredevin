@@ -22,6 +22,7 @@ const SignIn: RequestHandler = async (req, res, next) => {
     user.token = token;
     // Respond with the items in JSON format
     res.json(user);
+    return;
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
@@ -45,21 +46,23 @@ const Check: RequestHandler = async (req, res, next) => {
   const token = req.headers.token as string;
 
   if (!token) {
-    res.status(401).send({ check: false });
-    return;
+    return res.status(401).send({ check: false });
   }
 
   const appSecret = process.env.APP_SECRET;
+
   if (!appSecret) {
-    res.status(500).send({ error: "APP_SECRET is not defined" });
-    return;
+    return res.status(500).send({ error: "APP_SECRET is not defined" });
   }
-  jwt.verify(token, appSecret, (error: jwt.VerifyErrors | null) => {
+  jwt.verify(token, appSecret, async (error, decoded) => {
     if (error) {
-      res.status(401).send({ check: false });
-      return;
+      return res.status(401).send({ check: false });
     }
-    next();
+
+    const user: { token?: string } = await usersRepository.read(decoded.id);
+
+    return res.status(200).send({ check: true, user: user });
+
   });
 };
 
