@@ -118,12 +118,12 @@ CREATE TABLE wine_filters (
 
 INSERT INTO roles (name) VALUES ('admin'), ('client');
 
-INSERT INTO user (firstname, lastname, date_of_birth, email, password, phone, address, role_id) VALUES
-('Jean', 'Dupont', '1985-03-15', 'jean.dupont@email.com', '1234567', '+33612345678', '123 Rue de Paris, Paris', '2'),
-('Marie', 'Martin', '1990-07-22', 'marie.martin@email.com', '1234567', '+33623456789', '45 Avenue des Champs-Élysées, Paris', '2'),
-('Pierre', 'Bernard', '1988-11-30', 'pierre.bernard@email.com', '1234567', '+33634567890', '78 Rue du Commerce, Lyon', '2'),
-('Sophie', 'Petit', '1992-04-18', 'sophie.petit@email.com', '1234567', '+33645678901', '15 Rue de la République, Marseille', '2'),
-('Lucas', 'Moreau', '1987-09-25', 'lucas.moreau@email.com', '1234567', '+33656789012', '32 Boulevard Victor Hugo, Nice', '2');
+INSERT INTO user (firstname, lastname, login,  date_of_birth, email, password, phone, address, role_id) VALUES
+('Jean', 'Dupont', 'azerty@free.fr', '1985-03-15', 'jean.dupont@email.com', '1234567', '+33612345678', '123 Rue de Paris, Paris', '2'),
+('Marie', 'Martin', 'azerte','1990-07-22', 'marie.martin@email.com', '1234567', '+33623456789', '45 Avenue des Champs-Élysées, Paris', '2'),
+('Pierre', 'Bernard', 'azertr','1988-11-30', 'pierre.bernard@email.com', '1234567', '+33634567890', '78 Rue du Commerce, Lyon', '2'),
+('Sophie', 'Petit', 'azertt','1992-04-18', 'sophie.petit@email.com', '1234567', '+33645678901', '15 Rue de la République, Marseille', '2'),
+('Lucas', 'Moreau', 'azertu','1987-09-25', 'lucas.moreau@email.com', '1234567', '+33656789012', '32 Boulevard Victor Hugo, Nice', '2');
 
 INSERT INTO wine (name, img_url, category, origin, price, description, wine_url) VALUES
 ("Château d'Esclans Garrus 2021", "assets/uploads/wines/1.png", "Rosé", "Côtes-de-Provence", 115.00, "Un rosé prestigieux offrant une complexité aromatique exceptionnelle, avec des notes de fruits mûrs et une finale longue et élégante", "https://meilleur-vin.fr/fr/vin-rose/81-1770-chateau-d-esclans-garrus-vin-rose.html#/26-volume-075_l/71-millesime-2021"),
