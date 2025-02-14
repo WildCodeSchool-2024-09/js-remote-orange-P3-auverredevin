@@ -178,7 +178,7 @@ function Quizz() {
           </button>
         ) : (
           <button type="button" onClick={handleSubmitQuiz}>
-            Soumettre le quiz
+            Voir mon resultat
           </button>
         )}
         <button type="button" onClick={handleResetQuiz}>
