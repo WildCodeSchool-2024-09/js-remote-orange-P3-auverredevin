@@ -19,6 +19,7 @@ import ListWine from "./pages/ListeVin/ListeVin";
 import NotFound from "./pages/NotFound/NotFound";
 import Profil from "./pages/Profil/Profil";
 import Quizz from "./pages/Quizz/Quizz";
+import Result from "./pages/Result/Result";
 import Welcome from "./pages/Welcome/Welcome";
 
 // Back-office pages
@@ -109,7 +110,14 @@ const router = createBrowserRouter([
     path: "/connexion", // Page d'inscription
     element: <Connexion />,
   },
-  { path: "/legalmentions", element: <LegalMentions /> },
+  {
+    path: "/legalmentions",
+    element: <LegalMentions />, // Page de mentions légales
+  },
+  {
+    path: "/result",
+    element: <Result />, // Page de résultat quizz
+  },
 ]);
 
 /* ************************************************************************* */
