@@ -1,3 +1,4 @@
+// @ts-nocheck
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 

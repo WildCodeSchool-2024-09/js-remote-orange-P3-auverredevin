@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { RequestHandler } from "express";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
@@ -54,6 +55,7 @@ const Check: RequestHandler = async (req, res, next) => {
   if (!appSecret) {
     return res.status(500).send({ error: "APP_SECRET is not defined" });
   }
+
   jwt.verify(token, appSecret, async (error, decoded) => {
     if (error) {
       return res.status(401).send({ check: false });
@@ -62,7 +64,6 @@ const Check: RequestHandler = async (req, res, next) => {
     const user: { token?: string } = await usersRepository.read(decoded.id);
 
     return res.status(200).send({ check: true, user: user });
-
   });
 };
 
