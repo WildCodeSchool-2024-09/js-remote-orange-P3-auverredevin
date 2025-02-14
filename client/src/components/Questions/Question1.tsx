@@ -1,4 +1,4 @@
-import type React from "react";
+import React from "react";
 
 interface IAnswer {
   answer_id: number;
@@ -16,32 +16,29 @@ interface QuestionProps {
   onSelectAnswer: (questionId: number, answerId: number) => void;
 }
 
-const Question1: React.FC<QuestionProps> = ({
-  question,
-  answers,
-  selectedAnswers,
-  onSelectAnswer,
-}) => {
-  return (
-    <div className="card">
-      <h3>{question.question_text}</h3>
-      {answers?.map((answer) => (
-        <div key={answer.answer_id}>
-          <input
-            type="radio"
-            name={`question-${question.question_id}`}
-            value={answer.answer_id}
-            checked={selectedAnswers.includes(answer.answer_id)}
-            onChange={() =>
-              onSelectAnswer(question.question_id, answer.answer_id)
-            }
-          />
-          {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-          <label>{answer.answer_text}</label>
-        </div>
-      ))}
-    </div>
-  );
-};
+class Question1 extends React.Component<QuestionProps> {
+  render() {
+    const { question, answers, selectedAnswers, onSelectAnswer } = this.props;
+    return (
+      <div className="card">
+        <h3>{question.question_text}</h3>
+        {answers?.map((answer) => (
+          <div key={answer.answer_id}>
+            <input
+              type="radio"
+              name={`question-${question.question_id}`}
+              value={answer.answer_id}
+              checked={selectedAnswers.includes(answer.answer_id)}
+              onChange={() =>
+                onSelectAnswer(question.question_id, answer.answer_id)
+              }
+            />
+            <span>{answer.answer_text}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
 
 export default Question1;

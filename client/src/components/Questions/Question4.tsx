@@ -36,8 +36,7 @@ const Question4: React.FC<QuestionProps> = ({
               onSelectAnswer(question.question_id, answer.answer_id)
             }
           />
-          {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-          <label>{answer.answer_text}</label>
+          <span>{answer.answer_text}</span>
         </div>
       ))}
     </div>

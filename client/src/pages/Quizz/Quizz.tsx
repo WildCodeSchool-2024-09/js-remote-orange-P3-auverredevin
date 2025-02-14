@@ -102,14 +102,6 @@ function Quizz() {
     }
   };
 
-  const handleEditAnswer = (_questionId: number, _answerId: number) => {
-    // Implement the edit answer functionality here
-  };
-
-  const handleDeleteAnswer = (_answerId: number) => {
-    // Implement the delete answer functionality here
-  };
-
   const renderQuestion = (question: IQuestion) => {
     const answersForQuestion = answers[question.question_id] || [];
     switch (question.question_id) {
@@ -129,8 +121,6 @@ function Quizz() {
             answers={answersForQuestion} // Passe les réponses
             selectedAnswers={selectedAnswers[question.question_id] || []}
             onSelectAnswer={handleSelectAnswer}
-            onEditAnswer={handleEditAnswer}
-            onDeleteAnswer={handleDeleteAnswer}
           />
         );
       case 3:
@@ -140,8 +130,6 @@ function Quizz() {
             answers={answersForQuestion} // Passe les réponses
             selectedAnswers={selectedAnswers[question.question_id] || []}
             onSelectAnswer={handleSelectAnswer}
-            onEditAnswer={handleEditAnswer}
-            onDeleteAnswer={handleDeleteAnswer}
           />
         );
       case 4:
@@ -151,8 +139,6 @@ function Quizz() {
             answers={answersForQuestion} // Passe les réponses
             selectedAnswers={selectedAnswers[question.question_id] || []}
             onSelectAnswer={handleSelectAnswer}
-            onEditAnswer={handleEditAnswer}
-            onDeleteAnswer={handleDeleteAnswer}
           />
         );
       case 5:
@@ -162,8 +148,6 @@ function Quizz() {
             answers={answersForQuestion} // Passe les réponses
             selectedAnswers={selectedAnswers[question.question_id] || []}
             onSelectAnswer={handleSelectAnswer}
-            onEditAnswer={handleEditAnswer}
-            onDeleteAnswer={handleDeleteAnswer}
           />
         );
       default:
