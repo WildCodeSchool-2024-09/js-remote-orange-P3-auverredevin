@@ -109,10 +109,7 @@ const router = createBrowserRouter([
     path: "/connexion", // Page d'inscription
     element: <Connexion />,
   },
-  {
-    path: "/legalmentions",
-    element: <LegalMentions />, // Page de mentions légales
-  },
+  { path: "/legalmentions", element: <LegalMentions /> },
 ]);
 
 /* ************************************************************************* */

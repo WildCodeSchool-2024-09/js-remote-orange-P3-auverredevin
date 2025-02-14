@@ -4,17 +4,22 @@ import type { Result, Rows } from "../../../database/client";
 
 interface Answer {
   answer_id: number;
-  question_id: number;
+  question_id: string;
   answer_text: string;
   score_value: number;
 }
 class answersRepository {
   // The C of CRUD - Create operation
 
-  async create(answers: Omit<Answer, "answer_id">) {
+  async create(answers: Omit<Answer, "answers_id">) {
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO answers (question_id, answer_text, score_value) VALUES (?, ?, ?)",
-      [answers.question_id, answers.answer_text, answers.score_value],
+      "insert into answers (answer_id, question_id, answer_text, score_value) values (?, ?, ?, ?)",
+      [
+        answers.answer_id,
+        answers.question_id,
+        answers.answer_text,
+        answers.score_value,
+      ],
     );
 
     // Return the ID of the newly inserted answers
@@ -26,7 +31,7 @@ class answersRepository {
   async read(id: number) {
     // Execute the SQL SELECT query to retrieve a specific answers by its ID
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM answers WHERE answer_id = ?",
+      "select * from answers where answers_id = ?",
       [id],
     );
 
@@ -36,40 +41,25 @@ class answersRepository {
 
   async readAll() {
     // Execute the SQL SELECT query to retrieve all items from the "item" table
-    const [rows] = await databaseClient.query<Rows>("SELECT * FROM answers");
+    const [rows] = await databaseClient.query<Rows>("select * from answers");
 
     // Return the array of items
     return rows as Answer[];
   }
 
-  async readByQuestionId(questionId: number) {
-    const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM answers WHERE question_id = ?",
-      [questionId],
-    );
-    return rows as Answer[];
-  }
-
   // The U of CRUD - Update operation
-  async update(answers: Answer) {
-    await databaseClient.query<Result>(
-      "UPDATE answers SET question_id = ?, answer_text = ?, score_value = ? WHERE answer_id = ?",
-      [
-        answers.question_id,
-        answers.answer_text,
-        answers.score_value,
-        answers.answer_id,
-      ],
-    );
-  }
+  // TODO: Implement the update operation to modify an existing item
+
+  // async update(item: Item) {
+  //   ...
+  // }
 
   // The D of CRUD - Delete operation
-  async delete(id: number) {
-    await databaseClient.query<Result>(
-      "DELETE FROM answers WHERE answer_id = ?",
-      [id],
-    );
-  }
+  // TODO: Implement the delete operation to remove an item by its ID
+
+  // async delete(id: number) {
+  //   ...
+  // }
 }
 
 export default new answersRepository();

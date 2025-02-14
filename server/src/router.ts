@@ -8,7 +8,6 @@ const router = express.Router();
 
 import answerActions from "./modules/answers/answersActions";
 import SignIn from "./modules/auth/auth";
-
 // Define item-related routes
 import tastingActions from "./modules/degustation/tastingActions";
 import itemActions from "./modules/item/itemActions";
@@ -45,12 +44,9 @@ router.get("/api/question", quizzActions.browse);
 router.get("/api/question/:id", quizzActions.read);
 router.post("/api/question", quizzActions.add);
 
-router.get("/api/answers", answersActions.browse);
-router.get("/api/answers/:id", answersActions.read);
-router.post("/api/answers", answersActions.add);
-router.put("/api/answers/:id", answersActions.edit);
-router.delete("/api/answers/:id", answersActions.deleteAnswer);
-router.get("/question/:questionId", answersActions.readByQuestionId);
+router.get("/api/answers", answerActions.browse);
+router.get("/api/answers/:id", answerActions.read);
+router.post("/api/answers", answerActions.add);
 
 router.get("/api/suggestion", suggestionActions.browse);
 router.get("/api/suggestion/:id", suggestionActions.read);

@@ -75,8 +75,8 @@ CREATE TABLE answers (
     answer_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     question_id INT NOT NULL,
     answer_text TEXT NOT NULL,
-    score_value INT NOT NULL, -- Score de la réponse
-    FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE
+    score_value INT NOT NULL, -- Score de la reponse
+    CONSTRAINT fk_question FOREIGN KEY (question_id) REFERENCES questions(question_id)
 );
 
 CREATE TABLE user_answers (
@@ -84,13 +84,12 @@ CREATE TABLE user_answers (
     user_id INT NOT NULL,
     question_id INT NOT NULL,
     answer_id INT NOT NULL,
-    answer_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Ajout de la date de réponse
-    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE,
-    FOREIGN KEY (answer_id) REFERENCES answers(answer_id) ON DELETE CASCADE
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user(user_id),
+    CONSTRAINT fk_question_2 FOREIGN KEY (question_id) REFERENCES questions(question_id),
+    CONSTRAINT fk_answer FOREIGN KEY (answer_id) REFERENCES answers(answer_id)
 );
 
-CREATE TABLE taste_profiles (  -- N'est pas utilisée dans le projet final
+CREATE TABLE taste_profiles (
     profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     min_score INT NOT NULL,
     max_score INT NOT NULL,
@@ -102,11 +101,9 @@ CREATE TABLE user_scores (
     user_id INT NOT NULL,
     total_score INT NOT NULL,
     taste_profile_id INT,  -- Clé étrangère vers la table taste_profiles
-    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (taste_profile_id) REFERENCES taste_profiles(profile_id)
+    CONSTRAINT fk_user_score FOREIGN KEY (user_id) REFERENCES user(user_id),
+    CONSTRAINT fk_taste_profile FOREIGN KEY (taste_profile_id) REFERENCES taste_profiles(profile_id)
 );
-
-CREATE INDEX idx_user_question ON user_answers (user_id, question_id);
 
 CREATE TABLE wine_filters (
     filter_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -246,19 +243,17 @@ INSERT INTO opinion (note, description, wine_id, user_id) VALUES
 (5.0, "Un vin riche et complexe. Parfait pour les grandes occasions.", 20, 5);
 
 INSERT INTO questions (question_text) VALUES
-("Quel type de vin préférez-vous ?"),
+("Quel niveau d'acidité aimez-vous dans un vin ?"),
 ("Préférez-vous un vin léger ou puissant ?"),
 ("Quel arôme recherchez-vous dans un vin ?"),
-("Avec quel plat allez-vous accompagner ce vin ?"),
-("Quel est votre budget approximatif ?");
+("Préférez-vous un vin sec ou sucré ?"),
+("Quel type de vin préférez vous?");
 
-
--- Question 1 : Quel type de vin préférez-vous ?
+-- Question 1 : Quel niveau d'acidité aimez-vous dans un vin ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
-(1, 'Rouge', 1),
-(1, 'Blanc', 2),
-(1, 'Rosé', 3),
-(1, 'Pétillant', 4);
+(1, 'Faible acidité', 1),
+(1, 'Acidité modérée', 2),
+(1, 'Acidité élevée', 3);
 
 -- Question 2 : Préférez-vous un vin léger ou puissant ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
@@ -269,23 +264,21 @@ INSERT INTO answers (question_id, answer_text, score_value) VALUES
 -- Question 3 : Quel arôme recherchez-vous dans un vin ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
 (3, 'Fruité', 1),
-(3, 'Sec', 2),
-(3, 'Sucré', 3),
-(3, 'Boisé', 4);
+(3, 'Épicé', 2),
+(3, 'Boisé', 3),
+(3, 'Floral', 4);
 
--- Question 4 : Avec quel plat allez-vous accompagner ce vin ?
+-- Question 4 : Préférez-vous un vin sec ou sucré ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
-(4, 'Viande rouge', 1),
-(4, 'Poisson ou fruits de mer', 2),
-(4, 'Fromage', 3),
-(4, 'Dessert sucré', 4);
+(4, 'Sec', 1),
+(4, 'Demi-sec', 2),
+(4, 'Sucré', 3);
 
--- Question 5 : Quel est votre budget approximatif ?
+-- Question 5 : Quel type de vin préférez-vous ?
 INSERT INTO answers (question_id, answer_text, score_value) VALUES
-(5, 'Moins de 10€', 1),
-(5, 'Entre 10 et 20€', 2),
-(5, 'Entre 20 et 50€', 3),
-(5, 'Plus de 50€', 4);
+(5, 'Rouge', 1),
+(5, 'Blanc', 2),
+(5, 'Rosé', 3);
 
 -- Réponses des utilisateurs
 
