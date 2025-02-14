@@ -12,9 +12,22 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import NavBar from "../../components/NavBar/NavBar";
+const checkLoginExists = async (login: string) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3310/api/users/check-login/${login}`,
+    );
+    const data = response.data as { exists: boolean };
+    return data.exists; // true si le login est déjà pris
+  } catch (error) {
+    console.error("Erreur lors de la vérification du login:", error);
+    return false; // En cas d'erreur, on suppose que le login n'existe pas
+  }
+};
 
 function Inscription() {
   const [formData, setFormData] = useState({
+    login: "",
     firstname: "",
     lastname: "",
     date_of_birth: "",
@@ -35,15 +48,19 @@ function Inscription() {
     });
   };
 
-  const validateForm = () => {
+  const validateForm = async () => {
     const newErrors: Record<string, string> = {};
-
     if (!formData.firstname) newErrors.firstname = "Le prénom est requis";
     if (!formData.lastname) newErrors.lastname = "Le nom est requis";
     if (!formData.date_of_birth)
       newErrors.date_of_birth = "La date de naissance est requise";
     if (!formData.email) newErrors.email = "L'email est requis";
     if (!formData.password) newErrors.password = "Le mot de passe est requis";
+    if (!formData.login) newErrors.login = "Le pseudo est requis";
+    if (formData.login.length < 3)
+      newErrors.login = "Le pseudo doit contenir au moins 3 caractères";
+    const loginExists = await checkLoginExists(formData.login);
+    if (loginExists) newErrors.login = "Le pseudo est déjà pris";
 
     setErrors(newErrors);
 
@@ -104,6 +121,17 @@ function Inscription() {
               required
               error={!!errors.lastname}
               helperText={errors.lastname}
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Pseudo"
+              name="login"
+              value={formData.login}
+              onChange={handleChange}
+              required
+              error={!!errors.login}
+              helperText={errors.login}
             />
             <TextField
               fullWidth
