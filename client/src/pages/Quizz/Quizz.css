@@ -4,13 +4,10 @@ h2 {
 }
 
 .card-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Crée 2 colonnes de taille égale */
-  grid-template-rows: repeat(2, 1fr); /* Crée 2 lignes en fonction du contenu */
-  gap: 3em; /* Espacement entre les cartes */
-  justify-items: center; /* Centre les cartes horizontalement */
-  align-items: center; /* Centre les cartes verticalement */
-  padding: 2em;
+  display: flex;
+  justify-content: center; /* Centre la carte horizontalement */
+  align-items: center; /* Centre la carte verticalement */
+  height: 35vh; /* Prend toute la hauteur de la page */
 }
 
 .card {

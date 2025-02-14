@@ -54,9 +54,47 @@ const add: RequestHandler = async (req, res, next) => {
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
 
-export default { browse, read, add };
+// The E of BREAD - Edit (Update) operation
+const edit: RequestHandler = async (req, res, next) => {
+  try {
+    const answersId = Number(req.params.id);
+    const updatedAnswers = {
+      answer_id: answersId,
+      question_id: req.body.question_id,
+      answer_text: req.body.answer_text,
+      score_value: req.body.score_value,
+    };
+    await answersRepository.update(updatedAnswers);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// The D of BREAD - Delete operation
+const deleteAnswer: RequestHandler = async (req, res, next) => {
+  try {
+    const answersId = Number(req.params.id);
+    await answersRepository.delete(answersId);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Fetch answers by question ID
+const readByQuestionId: RequestHandler = async (req, res, next) => {
+  try {
+    const questionId = Number(req.params.questionId);
+    const answers = await answersRepository.readByQuestionId(questionId);
+    res.json(answers);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { browse, read, add, edit, deleteAnswer, readByQuestionId };
