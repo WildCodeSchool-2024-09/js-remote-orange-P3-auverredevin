@@ -1,6 +1,7 @@
 import "./Quizz.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import NavBar from "../../components/NavBar/NavBar";
 import Question1 from "../../components/Questions/Question1";
@@ -29,6 +30,7 @@ function Quizz() {
     [key: number]: number[];
   }>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -88,6 +90,7 @@ function Quizz() {
       .then((response) => {
         // biome-ignore lint/suspicious/noConsoleLog: <explanation>
         console.log("Vin recommandé :", response.data);
+        navigate("/result"); // Navigate to the Result component
       })
       .catch((error) => console.error(error));
   };
