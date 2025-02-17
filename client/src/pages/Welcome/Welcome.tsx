@@ -2,6 +2,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import NavBar from "../../components/NavBar/NavBar";
+import UserInfoModule from "../../components/UserInfo/UserInfo";
 
 interface WelcomeProps {
   username?: string;
@@ -68,6 +69,9 @@ function Welcome({ username }: WelcomeProps) {
             </Button>
           </Box>
         </Box>
+        <div>
+          <UserInfoModule />
+        </div>
         <Footer />
       </Container>
     </>

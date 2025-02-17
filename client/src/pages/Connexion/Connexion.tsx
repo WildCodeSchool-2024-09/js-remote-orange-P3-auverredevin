@@ -113,7 +113,12 @@ function Connexion() {
           color="primary"
           type="submit"
           sx={{ mt: 2, backgroundColor: "#9f0c00" }}
-          onClick={() => handleLogin(login, password)}
+          onClick={async () => {
+            await handleLogin(login, password);
+            if (localStorage.getItem("token")) {
+              navigate("/welcome");
+            }
+          }}
         >
           Je me connecte
         </Button>

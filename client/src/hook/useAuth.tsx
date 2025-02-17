@@ -74,29 +74,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLogin = async (login: string, password: string) => {
     if (login === null || password === null) {
-      //setMessage('Veuillez saisir les datas');
-      return;
+      return false;
     }
 
-    const values = { login: login, password: password };
-    const { data } = await axios.post<LoginResponse>(
-      `${import.meta.env.VITE_API_URL}/api/auth/signin`,
-      {
-        method: "POST",
-        values: values,
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      const values = { login: login, password: password };
+      const { data } = await axios.post<LoginResponse>(
+        `${import.meta.env.VITE_API_URL}/api/auth/signin`,
+        {
+          method: "POST",
+          values: values,
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      },
-    );
+      );
 
-    if (data.token) {
-      setIsAuth(true);
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-    } else {
+      if (data.token) {
+        setIsAuth(true);
+        setUser(data.user);
+        localStorage.setItem("token", data.token);
+        return true;
+      }
       setIsAuth(false);
       setMessage(data.message || "Password erronné");
+      return false;
+    } catch (error) {
+      setMessage("Erreur de connexion");
+      return false;
     }
   };
 
