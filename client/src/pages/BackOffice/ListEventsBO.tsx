@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import NavBar from "../../components/NavBar/NavBar";
+import "./ListEventsBO.css";
 
 interface Tasting {
   tasting_id: number;
@@ -214,8 +215,11 @@ function ListEventsBO() {
             <TableRow>
               <TableCell colSpan={5}>
                 <Button
-                  variant="contained"
-                  color="primary"
+                  sx={{
+                    color: "whitesmoke",
+                    backgroundColor: "#9f0c00",
+                    "&:hover": { backgroundColor: "#dd1e0d" },
+                  }}
                   onClick={() => setOpenAddModal(true)}
                   startIcon={<AddIcon />}
                 >
@@ -251,13 +255,14 @@ function ListEventsBO() {
                     href={tasting.website_url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    style={{ color: "#9f0c00" }}
                   >
                     Visiter
                   </a>
                 </TableCell>
                 <TableCell>
                   <IconButton
-                    color="primary"
+                    sx={{ color: "black" }}
                     onClick={(e) => handleClickMenu(e, tasting)}
                   >
                     <AddIcon />
@@ -407,25 +412,25 @@ function ListEventsBO() {
           count={totalPages}
           page={currentPage}
           onChange={handlePageChange}
-          color="primary"
+          sx={{ "& .MuiPaginationItem-root": { color: "#9f0c00" } }}
           showFirstButton
           showLastButton
         />
+        <Box display="flex" justifyContent="center" sx={{ marginBottom: 2 }}>
+          <Link to="/backoffice">
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "#9f0c00",
+                "&:hover": { backgroundColor: "#dd1e0d" },
+              }}
+            >
+              Index BackOffice
+            </Button>
+          </Link>
+        </Box>
       </Stack>
-      <Box display="flex" justifyContent="center" sx={{ marginBottom: 2 }}>
-        <Link to="/backoffice">
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#9f0c00",
-              "&:hover": { backgroundColor: "#dd1e0d" },
-            }}
-          >
-            Index BackOffice
-          </Button>
-        </Link>
-      </Box>
       <Footer />
     </div>
   );

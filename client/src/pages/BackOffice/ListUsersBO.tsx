@@ -1,6 +1,10 @@
+import "./ListUsersBO.css";
+
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Button,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -60,9 +64,7 @@ function ListUsersBO() {
     setOrderBy(property);
   };
 
-  // Suppression d'un utilisateur
   const handleDelete = (userId: number) => {
-    // Alerte de confirmation avant la suppression
     const confirmDelete = window.confirm(
       "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
     );
@@ -89,7 +91,7 @@ function ListUsersBO() {
   );
 
   return (
-    <div>
+    <div className="ListUsersBO">
       <NavBar />
       <Typography
         variant="h4"
@@ -99,71 +101,74 @@ function ListUsersBO() {
       >
         Liste des utilisateurs
       </Typography>
-      <Paper sx={{ margin: "20px", padding: "10px" }}>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
+      <TableContainer
+        component={Paper}
+        sx={{ maxWidth: "80%", margin: "auto" }}
+      >
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === "firstname"}
+                  direction={order}
+                  onClick={() => handleSort("firstname")}
+                >
+                  Prénom
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === "lastname"}
+                  direction={order}
+                  onClick={() => handleSort("lastname")}
+                >
+                  Nom
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === "email"}
+                  direction={order}
+                  onClick={() => handleSort("email")}
+                >
+                  Email
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedUsers.map((user) => (
+              <TableRow key={user.user_id}>
+                <TableCell>{user.firstname}</TableCell>
+                <TableCell>{user.lastname}</TableCell>
+                <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <TableSortLabel
-                    active={orderBy === "firstname"}
-                    direction={order}
-                    onClick={() => handleSort("firstname")}
+                  <IconButton
+                    sx={{ color: "black" }}
+                    onClick={() => handleDelete(user.user_id)}
                   >
-                    Prénom
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={orderBy === "lastname"}
-                    direction={order}
-                    onClick={() => handleSort("lastname")}
-                  >
-                    Nom
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel
-                    active={orderBy === "email"}
-                    direction={order}
-                    onClick={() => handleSort("email")}
-                  >
-                    Email
-                  </TableSortLabel>
+                    <DeleteIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {paginatedUsers.map((user) => (
-                <TableRow key={user.user_id}>
-                  <TableCell>{user.firstname}</TableCell>
-                  <TableCell>{user.lastname}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => handleDelete(user.user_id)}
-                    >
-                      Supprimer
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 50]}
-          component="div"
-          count={users.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={(event, newPage) => handlePageChange(event, newPage)}
-          onRowsPerPageChange={handleRowsPerPageChange}
-        />
-      </Paper>
-      <Box display="flex" justifyContent="center" sx={{ marginBottom: 2 }}>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25, 50]}
+        component="div"
+        count={users.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(event, newPage) => handlePageChange(event, newPage)}
+        onRowsPerPageChange={handleRowsPerPageChange}
+        sx={{ display: "flex", justifyContent: "center" }}
+      />
+
+      <Box display="flex" justifyContent="center" sx={{ mt: 1 }}>
         <Link to="/backoffice">
           <Button
             variant="contained"
