@@ -8,9 +8,20 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
+
+  // Vérifier si un token existe dans le localStorage
+  const token = localStorage.getItem("token");
+
+  // Fonction de déconnexion
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Supprimer le token
+    navigate("/"); // Rediriger vers la page d'accueil (ou une autre page)
+  };
+
   return (
     <>
       <BurgerMenu />
@@ -21,11 +32,21 @@ function NavBar() {
           </Link>
         </div>
         <div className="connexion">
-          <Link to="/connexion">
-            <button type="button" className="button-connexion">
-              <strong> Connexion </strong>
+          {token ? (
+            <button
+              type="button"
+              className="button-connexion"
+              onClick={handleLogout}
+            >
+              <strong>Déconnexion</strong>
             </button>
-          </Link>
+          ) : (
+            <Link to="/connexion">
+              <button type="button" className="button-connexion">
+                <strong>Connexion</strong>
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </>
@@ -57,7 +78,6 @@ const BurgerMenu = () => {
 
   return (
     <div className="burger-menu">
-      {/* Bouton burger avec MUI */}
       <IconButton
         color="inherit"
         aria-label="menu"
@@ -67,17 +87,16 @@ const BurgerMenu = () => {
         <MenuIcon fontSize="large" />
       </IconButton>
 
-      {/* Drawer (menu burger) */}
       <Drawer
         anchor="left"
         open={isDrawerOpen}
         onClose={toggleDrawer(false)}
         sx={{
           "& .MuiDrawer-paper": {
-            backgroundColor: "#F5E8DF", // Couleur de fond du menu
-            color: "#ffffff", // Couleur du texte
-            width: 250, // Largeur du Drawer
-            boxShadow: "2px 0 10px rgba(0, 0, 0, 0.3)", // Ombre douce
+            backgroundColor: "#F5E8DF",
+            color: "#ffffff",
+            width: 250,
+            boxShadow: "2px 0 10px rgba(0, 0, 0, 0.3)",
           },
         }}
       >
@@ -88,9 +107,9 @@ const BurgerMenu = () => {
                 <ListItemText
                   primary={item.text}
                   sx={{
-                    color: "#4A4A4A", // Couleur du texte des éléments
-                    textTransform: "uppercase", // Texte en majuscules
-                    fontWeight: "bolder", // Texte en gras
+                    color: "#4A4A4A",
+                    textTransform: "uppercase",
+                    fontWeight: "bolder",
                   }}
                 />
               </ListItem>
