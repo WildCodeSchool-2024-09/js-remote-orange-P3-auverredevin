@@ -2,12 +2,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./hook/useAuth";
 /* ************************************************************************* */
 
 // Main app component
 import App from "./App";
-import Footer from "./components/Footer/Footer";
 
 // Front-end pages
 import AboutUs from "./pages/Aboutus/AboutUs";
@@ -66,47 +66,41 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-
     element: <NotFound />, // Page 404
   },
   {
     path: "/vins",
     element: <ListWine />, // Liste des vins
   },
+  // Routes Back-Office protégées avec PrivateRoute
   {
     path: "/backoffice",
-    element: <IndexBackOffice />, // backoffice
+    element: (
+      <PrivateRoute component={IndexBackOffice} isAuthenticated={true} />
+    ), // Backoffice
   },
   {
     path: "/suggestionsBO",
-    element: <SuggestionsBO />, // backoffice suggestions
+    element: <PrivateRoute component={SuggestionsBO} isAuthenticated={true} />, // Backoffice suggestions
   },
   {
     path: "/vinsBO",
-    element: <ListWinesBO />, // backoffice vins
+    element: <PrivateRoute component={ListWinesBO} isAuthenticated={true} />, // Backoffice vins
   },
   {
     path: "/evenementsBO",
-    element: <ListEventsBO />, // backoffice événements
+    element: <PrivateRoute component={ListEventsBO} isAuthenticated={true} />, // Backoffice événements
   },
   {
     path: "/utilisateursBO",
-    element: <ListUsersBO />, // backoffice utilisateurs
-  },
-  {
-    path: "/footer",
-    element: <Footer />, // Page de bienvenue
-  },
-  {
-    path: "/fnscription", // Page d'inscription
-    element: <Inscription />,
+    element: <PrivateRoute component={ListUsersBO} isAuthenticated={true} />, // Backoffice utilisateurs
   },
   {
     path: "/welcome", // Page de bienvenue
     element: <Welcome />,
   },
   {
-    path: "/connexion", // Page d'inscription
+    path: "/connexion", // Page de connexion
     element: <Connexion />,
   },
   {
