@@ -155,7 +155,10 @@ function SuggestionsBO() {
     <div>
       <NavBar />
       <h1>SuggestionsBO</h1>
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{ maxWidth: "80%", margin: "auto" }}
+      >
         <Table>
           <TableHead>
             <TableRow>
@@ -342,7 +345,7 @@ function SuggestionsBO() {
         </Box>
       </Modal>
 
-      <Box display="flex" justifyContent="center" sx={{ marginBottom: 2 }}>
+      <Box display="flex" justifyContent="center" sx={{ mt: 1 }}>
         <Link to="/backoffice">
           <Button
             variant="contained"

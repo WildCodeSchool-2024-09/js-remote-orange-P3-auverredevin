@@ -195,17 +195,39 @@ function ListWinesBO() {
       <section className="ListWinesBO">
         <h1>Liste des Vins - BackOffice</h1>
 
-        <Box sx={{ mb: 3, padding: 2 }}>
+        <Box sx={{ mb: 3, padding: 2, maxWidth: "80%", margin: "auto" }}>
           <TextField
             fullWidth
             label="Rechercher un vin..."
             variant="outlined"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "#9f0c00",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#9f0c00",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#9f0c00",
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: "#9f0c00",
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "#9f0c00",
+              },
+            }}
           />
         </Box>
 
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{ maxWidth: "80%", margin: "auto" }}
+        >
           <Table sx={{ minWidth: 650 }} aria-label="table des vins">
             <TableHead>
               <TableRow>
@@ -223,8 +245,11 @@ function ListWinesBO() {
               <TableRow>
                 <TableCell colSpan={7}>
                   <Button
-                    variant="contained"
-                    color="primary"
+                    sx={{
+                      color: "whitesmoke",
+                      backgroundColor: "#9f0c00",
+                      "&:hover": { backgroundColor: "#dd1e0d" },
+                    }}
                     onClick={() => setOpenAddModal(true)}
                     startIcon={<AddIcon />}
                   >
@@ -443,6 +468,8 @@ function ListWinesBO() {
         onPageChange={(event, newPage) => handlePageChange(event, newPage)}
         onRowsPerPageChange={handleRowsPerPageChange}
         sx={{
+          maxWidth: "80%",
+          margin: "auto",
           backgroundColor: "white",
           borderTop: "1px solid #ddd",
           padding: "8px 16px",

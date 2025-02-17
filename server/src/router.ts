@@ -6,10 +6,10 @@ const router = express.Router();
 // Define Your API Routes Here
 /* ************************************************************************* */
 
-import SignIn from "./modules/auth/auth";
 // Define item-related routes
 import answersActions from "./modules/answers/answersActions";
 import answerActions from "./modules/answers/answersActions";
+import SignIn from "./modules/auth/auth";
 import tastingActions from "./modules/degustation/tastingActions";
 import itemActions from "./modules/item/itemActions";
 import quizzActions from "./modules/quizz/quizzActions";

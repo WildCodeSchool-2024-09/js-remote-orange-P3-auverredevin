@@ -76,3 +76,7 @@
 .modal-content button {
   margin-top: 10px;
 }
+.add-wine-card:hover {
+  background-color: bisque;
+  cursor: pointer;
+}

@@ -1,4 +1,11 @@
-import "./Quizz.css";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +16,7 @@ import Question2 from "../../components/Questions/Question2";
 import Question3 from "../../components/Questions/Question3";
 import Question4 from "../../components/Questions/Question4";
 import Question5 from "../../components/Questions/Question5";
+import "../../components/Questions/Questions.css";
 
 interface IAnswer {
   answer_id: number;
@@ -35,9 +43,7 @@ function Quizz() {
   useEffect(() => {
     axios
       .get("http://localhost:3310/api/question")
-      .then((response) => {
-        setQuestions(response.data as IQuestion[]);
-      })
+      .then((response) => setQuestions(response.data as IQuestion[]))
       .catch((error) =>
         console.error("Erreur lors de la récupération des questions :", error),
       );
@@ -48,9 +54,7 @@ function Quizz() {
         const answersData = response.data as IAnswer[];
         const answersByQuestion = answersData.reduce(
           (acc: { [key: number]: IAnswer[] }, answer: IAnswer) => {
-            if (!acc[answer.question_id]) {
-              acc[answer.question_id] = [];
-            }
+            if (!acc[answer.question_id]) acc[answer.question_id] = [];
             acc[answer.question_id].push(answer);
             return acc;
           },
@@ -88,18 +92,14 @@ function Quizz() {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
-        // biome-ignore lint/suspicious/noConsoleLog: <explanation>
-        console.log("Vin recommandé :", response.data);
-        navigate("/result"); // Navigate to the Result component
+        console.info("Vin recommandé :", response.data);
+        navigate("/result");
       })
       .catch((error) => console.error(error));
   };
 
   const handleResetQuiz = () => {
-    const confirmReset = window.confirm(
-      "Voulez-vous vraiment recommencer le quiz ?",
-    );
-    if (confirmReset) {
+    if (window.confirm("Voulez-vous vraiment recommencer le quiz ?")) {
       setSelectedAnswers({});
       setCurrentQuestionIndex(0);
     }
@@ -112,7 +112,7 @@ function Quizz() {
         return (
           <Question1
             question={question}
-            answers={answersForQuestion} // Passe les réponses
+            answers={answersForQuestion}
             selectedAnswers={selectedAnswers[question.question_id] || []}
             onSelectAnswer={handleSelectAnswer}
           />
@@ -121,7 +121,7 @@ function Quizz() {
         return (
           <Question2
             question={question}
-            answers={answersForQuestion} // Passe les réponses
+            answers={answersForQuestion}
             selectedAnswers={selectedAnswers[question.question_id] || []}
             onSelectAnswer={handleSelectAnswer}
           />
@@ -130,7 +130,7 @@ function Quizz() {
         return (
           <Question3
             question={question}
-            answers={answersForQuestion} // Passe les réponses
+            answers={answersForQuestion}
             selectedAnswers={selectedAnswers[question.question_id] || []}
             onSelectAnswer={handleSelectAnswer}
           />
@@ -139,7 +139,7 @@ function Quizz() {
         return (
           <Question4
             question={question}
-            answers={answersForQuestion} // Passe les réponses
+            answers={answersForQuestion}
             selectedAnswers={selectedAnswers[question.question_id] || []}
             onSelectAnswer={handleSelectAnswer}
           />
@@ -148,7 +148,7 @@ function Quizz() {
         return (
           <Question5
             question={question}
-            answers={answersForQuestion} // Passe les réponses
+            answers={answersForQuestion}
             selectedAnswers={selectedAnswers[question.question_id] || []}
             onSelectAnswer={handleSelectAnswer}
           />
@@ -159,38 +159,96 @@ function Quizz() {
   };
 
   return (
-    <div className="Quizz">
+    <>
       <NavBar />
-      <h1>Quizz</h1>
-      <h2>Laissez-vous guider</h2>
+      <Container maxWidth="md">
+        <Typography
+          variant="h3"
+          component="h1"
+          align="center"
+          gutterBottom
+          sx={{ color: "#9f0c00", fontWeight: "bold" }}
+        >
+          Quiz Vin
+        </Typography>
+        <Typography variant="h5" component="h2" align="center" gutterBottom>
+          Découvrez quel vin vous correspond 🍷
+        </Typography>
 
-      <div className="card-container">
-        {questions.length > 0 &&
-          renderQuestion(questions[currentQuestionIndex])}
-      </div>
+        <Box mt={4} display="flex" justifyContent="center">
+          {questions.length > 0 && (
+            <Card
+              sx={{
+                width: "100%",
+                maxWidth: 600,
+                padding: 3,
+                backgroundColor: "#f9f1f1",
+                boxShadow: 5,
+                borderRadius: 3,
+              }}
+            >
+              <CardContent>
+                {renderQuestion(questions[currentQuestionIndex])}
+              </CardContent>
+            </Card>
+          )}
+        </Box>
 
-      <div className="buttons">
-        {currentQuestionIndex > 0 && (
-          <button type="button" onClick={handlePreviousQuestion}>
-            Précédent
-          </button>
-        )}
-        {currentQuestionIndex < questions.length - 1 ? (
-          <button type="button" onClick={handleNextQuestion}>
-            Suivant
-          </button>
-        ) : (
-          <button type="button" onClick={handleSubmitQuiz}>
-            Voir mon resultat
-          </button>
-        )}
-        <button type="button" onClick={handleResetQuiz}>
-          Recommencer
-        </button>
-      </div>
-
+        <Box mt={4} display="flex" justifyContent="center" gap={2}>
+          {currentQuestionIndex > 0 && (
+            <Button
+              variant="contained"
+              onClick={handlePreviousQuestion}
+              sx={{
+                backgroundColor: "#9f0c00",
+                color: "whitesmoke",
+                ":hover": { backgroundColor: "#dd1e0d" },
+              }}
+            >
+              Précédent
+            </Button>
+          )}
+          {currentQuestionIndex < questions.length - 1 ? (
+            <Button
+              variant="contained"
+              onClick={handleNextQuestion}
+              sx={{
+                backgroundColor: "#9f0c00",
+                color: "whitesmoke",
+                ":hover": { backgroundColor: "#dd1e0d" },
+              }}
+            >
+              Suivant
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={handleSubmitQuiz}
+              sx={{
+                backgroundColor: "#9f0c00",
+                color: "whitesmoke",
+                ":hover": { backgroundColor: "#dd1e0d" },
+              }}
+            >
+              Voir mon résultat
+            </Button>
+          )}
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleResetQuiz}
+            sx={{
+              backgroundColor: "#333",
+              color: "whitesmoke",
+              ":hover": { backgroundColor: "#555" },
+            }}
+          >
+            Recommencer
+          </Button>
+        </Box>
+      </Container>
       <Footer />
-    </div>
+    </>
   );
 }
 
