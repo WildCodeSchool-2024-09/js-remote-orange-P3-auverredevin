@@ -19,6 +19,7 @@ import ListWine from "./pages/ListeVin/ListeVin";
 import NotFound from "./pages/NotFound/NotFound";
 import Profil from "./pages/Profil/Profil";
 import Quizz from "./pages/Quizz/Quizz";
+import Utilisateur from "./pages/Utilisateur/Utilisateur";
 import Welcome from "./pages/Welcome/Welcome";
 
 // Back-office pages
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
   {
     path: "/legalmentions",
     element: <LegalMentions />, // Page de mentions légales
+  },
+  {
+    path: "/utilisateur",
+    element: <PrivateRoute component={Utilisateur} isAuthenticated={true} />,
   },
 ]);
 

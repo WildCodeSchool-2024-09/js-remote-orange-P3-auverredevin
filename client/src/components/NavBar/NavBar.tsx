@@ -8,19 +8,13 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function NavBar() {
-  const navigate = useNavigate();
-
   // Vérifier si un token existe dans le localStorage
   const token = localStorage.getItem("token");
 
   // Fonction de déconnexion
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // Supprimer le token
-    navigate("/"); // Rediriger vers la page d'accueil (ou une autre page)
-  };
 
   return (
     <>
@@ -33,13 +27,15 @@ function NavBar() {
         </div>
         <div className="connexion">
           {token ? (
-            <button
-              type="button"
-              className="button-connexion"
-              onClick={handleLogout}
-            >
-              <strong>Déconnexion</strong>
-            </button>
+            <Link to="/utilisateur">
+              <button
+                type="button"
+                className="button-connexion"
+                style={{ width: "110%" }}
+              >
+                <strong>Mon compte</strong>
+              </button>
+            </Link>
           ) : (
             <Link to="/connexion">
               <button type="button" className="button-connexion">
