@@ -78,13 +78,13 @@ export default function SuggestionVin({
           <img
             src="../src/assets/images/logo.png"
             alt="wine bottle"
-            style={{ width: "80%", height: "auto" }} // Taille réduite de l'image
+            style={{ width: "80%", height: "auto" }}
           />
         </Box>
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
-            size="small" // Champs plus petits
+            size="small"
             margin="dense"
             label="Nom du vin"
             value={name}
@@ -123,7 +123,7 @@ export default function SuggestionVin({
           <Stack spacing={1} direction="column" mt={1}>
             <Button
               type="submit"
-              size="small" // Boutons plus petits
+              size="small"
               sx={{
                 backgroundColor: "#9f0c00",
                 color: "whitesmoke",

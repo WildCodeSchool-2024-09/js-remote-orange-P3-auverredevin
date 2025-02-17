@@ -1,0 +1,41 @@
+.card h3 {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 2px solid #9f0c00;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+input[type="radio"]:checked {
+  background-color: #9f0c00;
+}
+
+input[type="radio"]:focus {
+  outline: none;
+}
+
+span {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: #333;
+  font-size: 1rem;
+}
+
+input[type="radio"]:checked + span {
+  color: #9f0c00;
+}

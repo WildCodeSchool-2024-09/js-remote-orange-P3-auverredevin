@@ -196,7 +196,11 @@ function WinesList() {
             <p>Prix : {wine.price}€</p>
             {wine.description && <p>{wine.description}</p>}
             <Button
-              sx={{ backgroundColor: "#9f0c00", color: "whitesmoke" }}
+              sx={{
+                backgroundColor: "#9f0c00",
+                color: "whitesmoke",
+                ":hover": { backgroundColor: "#dd1e0d" },
+              }}
               onClick={() => {
                 if (wine.wine_url) {
                   window.open(wine.wine_url, "_blank");
