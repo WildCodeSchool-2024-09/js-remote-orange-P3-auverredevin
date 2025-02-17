@@ -1,3 +1,4 @@
+// @ts-ignore
 import {
   Box,
   Button,
@@ -8,7 +9,6 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import NavBar from "../../components/NavBar/NavBar";
 import Question1 from "../../components/Questions/Question1";
@@ -16,7 +16,9 @@ import Question2 from "../../components/Questions/Question2";
 import Question3 from "../../components/Questions/Question3";
 import Question4 from "../../components/Questions/Question4";
 import Question5 from "../../components/Questions/Question5";
+import Result from "../../components/Questions/Resultat";
 import "../../components/Questions/Questions.css";
+import { useAnswers } from "../../Context/AnswersScore";
 
 interface IAnswer {
   answer_id: number;
@@ -38,7 +40,9 @@ function Quizz() {
     [key: number]: number[];
   }>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const navigate = useNavigate();
+  const { setAnswers: setContextAnswers } = useAnswers();
+  const [isLoggedIn] = useState(false); // Replace with actual login check
+  const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
     axios
@@ -87,15 +91,26 @@ function Quizz() {
   };
 
   const handleSubmitQuiz = () => {
-    axios
-      .post("http://localhost:3310/api/answers", selectedAnswers, {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((response) => {
-        console.info("Vin recommandé :", response.data);
-        navigate("/result");
-      })
-      .catch((error) => console.error(error));
+    if (isLoggedIn) {
+      axios
+        .post("http://localhost:3310/api/user/answers", selectedAnswers, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((response) => {
+          console.info("Vin recommandé :", response.data);
+          setShowResult(true);
+        })
+        .catch((error) => console.error(error));
+    } else {
+      const answersArray = Object.entries(selectedAnswers).map(
+        ([questionId, answerIds]) => ({
+          questionId: Number(questionId),
+          answerId: answerIds[0],
+        }),
+      );
+      setContextAnswers(answersArray);
+      setShowResult(true);
+    }
   };
 
   const handleResetQuiz = () => {
@@ -176,7 +191,7 @@ function Quizz() {
         </Typography>
 
         <Box mt={4} display="flex" justifyContent="center">
-          {questions.length > 0 && (
+          {questions.length > 0 && !showResult && (
             <Card
               sx={{
                 width: "100%",
@@ -192,60 +207,63 @@ function Quizz() {
               </CardContent>
             </Card>
           )}
+          {showResult && <Result />}
         </Box>
 
-        <Box mt={4} display="flex" justifyContent="center" gap={2}>
-          {currentQuestionIndex > 0 && (
+        {!showResult && (
+          <Box mt={4} display="flex" justifyContent="center" gap={2}>
+            {currentQuestionIndex > 0 && (
+              <Button
+                variant="contained"
+                onClick={handlePreviousQuestion}
+                sx={{
+                  backgroundColor: "#9f0c00",
+                  color: "whitesmoke",
+                  ":hover": { backgroundColor: "#dd1e0d" },
+                }}
+              >
+                Précédent
+              </Button>
+            )}
+            {currentQuestionIndex < questions.length - 1 ? (
+              <Button
+                variant="contained"
+                onClick={handleNextQuestion}
+                sx={{
+                  backgroundColor: "#9f0c00",
+                  color: "whitesmoke",
+                  ":hover": { backgroundColor: "#dd1e0d" },
+                }}
+              >
+                Suivant
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={handleSubmitQuiz}
+                sx={{
+                  backgroundColor: "#9f0c00",
+                  color: "whitesmoke",
+                  ":hover": { backgroundColor: "#dd1e0d" },
+                }}
+              >
+                Voir mon résultat
+              </Button>
+            )}
             <Button
               variant="contained"
-              onClick={handlePreviousQuestion}
+              color="secondary"
+              onClick={handleResetQuiz}
               sx={{
-                backgroundColor: "#9f0c00",
+                backgroundColor: "#333",
                 color: "whitesmoke",
-                ":hover": { backgroundColor: "#dd1e0d" },
+                ":hover": { backgroundColor: "#555" },
               }}
             >
-              Précédent
+              Recommencer
             </Button>
-          )}
-          {currentQuestionIndex < questions.length - 1 ? (
-            <Button
-              variant="contained"
-              onClick={handleNextQuestion}
-              sx={{
-                backgroundColor: "#9f0c00",
-                color: "whitesmoke",
-                ":hover": { backgroundColor: "#dd1e0d" },
-              }}
-            >
-              Suivant
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={handleSubmitQuiz}
-              sx={{
-                backgroundColor: "#9f0c00",
-                color: "whitesmoke",
-                ":hover": { backgroundColor: "#dd1e0d" },
-              }}
-            >
-              Voir mon résultat
-            </Button>
-          )}
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleResetQuiz}
-            sx={{
-              backgroundColor: "#333",
-              color: "whitesmoke",
-              ":hover": { backgroundColor: "#555" },
-            }}
-          >
-            Recommencer
-          </Button>
-        </Box>
+          </Box>
+        )}
       </Container>
       <Footer />
     </>
