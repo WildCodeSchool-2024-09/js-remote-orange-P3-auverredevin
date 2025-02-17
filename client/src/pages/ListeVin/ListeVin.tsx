@@ -9,6 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
 
 interface Wine {
   wine_id: number;
@@ -105,14 +106,34 @@ function WinesList() {
             flexWrap: "wrap",
           }}
         >
-          <input
-            type="search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Rechercher un vin..."
-            className="p-2 border rounded"
-            style={{ flex: 1 }}
-          />
+          <Box sx={{ mb: 3, padding: 2, maxWidth: "80%", margin: "auto" }}>
+            <TextField
+              fullWidth
+              label="Rechercher un vin..."
+              variant="outlined"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#9f0c00",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#9f0c00",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#9f0c00",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "#9f0c00",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#9f0c00",
+                },
+              }}
+            />
+          </Box>
 
           <Box sx={{ display: "flex", gap: 2, width: "120%" }}>
             <FormControl fullWidth>
