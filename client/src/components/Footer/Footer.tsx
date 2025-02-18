@@ -12,7 +12,7 @@ function Footer() {
             <a href="/evenements">ÉVENEMENTS</a>
           </li>
           <li>
-            <a href="/quizz">QUIZZ</a>
+            <a href="/quizz">QUIZ</a>
           </li>
           <li>
             <a href="/aboutus">À PROPOS DE NOUS</a>

@@ -64,7 +64,7 @@ function Welcome({ username }: WelcomeProps) {
               component={Link}
               to="/quizz"
             >
-              Faites un quizz pour découvrir vos goûts en matière de vin
+              Faites un quiz pour découvrir vos goûts en matière de vin
             </Button>
           </Box>
         </Box>
