@@ -1,5 +1,5 @@
 import databaseClient from "../../../database/client";
-
+import bcrypt from 'bcryptjs';
 import type { ResultSetHeader, RowDataPacket } from "mysql2/promise";
 
 type Result = ResultSetHeader;
@@ -58,18 +58,40 @@ class UsersRepository {
   // The Rs of CRUD - Read operations
 
   async checkuser(login: string, password: string): Promise<User | undefined> {
-    const [rows] = await databaseClient.query<Rows>(
-      `SELECT user_id, login, password, role_id, firstname, lastname 
-       FROM user 
-       WHERE login = ?`,
-      [login],
-    );
-
-    if (rows.length === 0) {
-      return undefined;
+    try {
+      console.log("Vérification utilisateur:", { login });
+      
+      // Modifions la requête pour récupérer tous les champs nécessaires
+      const [rows] = await databaseClient.query<Rows>(
+        `SELECT user_id, login, password, role_id, firstname, lastname, email 
+         FROM user 
+         WHERE login = ?`,
+        [login]
+      );
+  
+      if (rows.length === 0) {
+        console.log("Utilisateur non trouvé");
+        return undefined;
+      }
+  
+      const user = rows[0] as User;
+      console.log("Utilisateur trouvé:", user);
+      
+      // Vérifions si le mot de passe est stocké en clair ou hashé
+      const passwordMatch = password === user.password || await bcrypt.compare(password, user.password);
+  
+      if (!passwordMatch) {
+        console.log("Mot de passe incorrect");
+        return undefined;
+      }
+  
+      console.log("Authentification réussie pour:", user.login);
+      console.log("Role_id:", user.role_id);
+      return user;
+    } catch (error) {
+      console.error("Erreur dans checkuser:", error);
+      throw error;
     }
-
-    return rows[0] as User;
   }
 
   async readAll() {

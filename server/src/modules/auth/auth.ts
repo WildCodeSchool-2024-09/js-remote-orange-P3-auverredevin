@@ -6,16 +6,22 @@ import usersRepository from "../users/usersRepository";
 
 const SignIn: RequestHandler = async (req, res, next) => {
   try {
-    const { login, password } = req.body.values; // Notez le .values ici
+    console.log("Données reçues:", req.body);
+    const { login, password } = req.body;
 
     if (!login || !password) {
       return res.status(400).json({ message: "Login et mot de passe requis" });
     }
 
     const user = await usersRepository.checkuser(login, password);
+    console.log("Utilisateur trouvé:", user);
 
     if (!user) {
-      return res.status(401).json({ message: "Identifiants invalides" });
+      return res.status(401).json({ 
+        message: "Login ou mot de passe incorrect",
+        user: null,
+        token: null
+      });
     }
 
     const token = jwt.sign(
@@ -24,21 +30,27 @@ const SignIn: RequestHandler = async (req, res, next) => {
         role_id: user.role_id,
       },
       process.env.APP_SECRET,
-      { expiresIn: "2 days" },
+      { expiresIn: "2 days" }
     );
 
-    res.json({
+    return res.status(200).json({
       token,
       user: {
         user_id: user.user_id,
         role_id: user.role_id,
         firstname: user.firstname,
         lastname: user.lastname,
+        login: user.login
       },
-      message: "Connexion réussie",
+      message: "Connexion réussie"
     });
   } catch (err) {
-    next(err);
+    console.error("Erreur de connexion:", err);
+    return res.status(500).json({ 
+      message: "Erreur serveur",
+      user: null,
+      token: null
+    });
   }
 };
 

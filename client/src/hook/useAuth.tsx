@@ -79,37 +79,39 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLogin = async (login: string, password: string) => {
     try {
+      console.log("Tentative de connexion avec:", { login, password });
+  
       const response = await axios.post<LoginResponse>(
         `${import.meta.env.VITE_API_URL}/api/auth/signin`,
-        {
-          values: { login, password }, // Modification ici pour matcher avec le format attendu par le serveur
-        },
+        { login, password }, // Simplification de la structure
         {
           headers: {
             "Content-Type": "application/json",
           },
-        },
+        }
       );
+  
+      console.log("Réponse du serveur:", response.data);
       const { data } = response;
-
+  
       if (data.token && data.user) {
         setIsAuth(true);
         setUser(data.user);
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("role_id", data.user.role_id.toString());
+        if (data.user.role_id) {
+          localStorage.setItem("role_id", data.user.role_id.toString());
+        }
         return true;
       }
+      
       setIsAuth(false);
       setMessage(data.message || "Échec de l'authentification");
       return false;
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     } catch (error: any) {
-      console.error("Erreur détaillée:", error.response?.data || error.message);
+      console.error("Détails de l'erreur:", error.response?.data);
       setIsAuth(false);
-      setMessage(
-        error.response?.data?.message || "Erreur de connexion au serveur",
-      );
+      setMessage(error.response?.data?.message || "Erreur de connexion au serveur");
       return false;
     }
   };
