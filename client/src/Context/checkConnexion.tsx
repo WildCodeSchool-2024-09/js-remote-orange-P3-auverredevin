@@ -1,32 +1,20 @@
-import { createContext, useState } from "react";
-import type { FunctionComponent } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../hook/useAuth"; // Importer useAuth
 
-// définition du type pour le context
-type CheckConnexionContextType = {
-  isLogged: boolean;
-  setIsLogged: (isLogged: boolean) => void;
-};
-
-// création du context
-const CheckConnexionContext = createContext<CheckConnexionContextType | false>(
-  false,
-);
-
-interface CheckConnexionProviderProps {
-  children: React.ReactNode;
+interface PrivateRouteProps {
+  component: React.ComponentType<unknown>;
+  [key: string]: unknown;
 }
 
-// création du provider
-const CheckConnexionProvider: FunctionComponent<
-  CheckConnexionProviderProps
-> = ({ children }) => {
-  const [isLogged, setIsLogged] = useState(false);
+const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps) => {
+  const { isAuth } = useAuth(); // Utiliser le hook useAuth pour obtenir l'état d'authentification
 
-  return (
-    <CheckConnexionContext.Provider value={{ isLogged, setIsLogged }}>
-      {children}
-    </CheckConnexionContext.Provider>
+  // Si l'utilisateur est authentifié, afficher la route privée, sinon rediriger vers la page de connexion
+  return isAuth ? (
+    <Component {...rest} />
+  ) : (
+    <Navigate to="/connexion" replace />
   );
 };
 
-export default CheckConnexionProvider;
+export default PrivateRoute;

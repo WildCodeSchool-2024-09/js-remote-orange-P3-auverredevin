@@ -1,0 +1,16 @@
+import { Navigate } from 'react-router-dom';
+import { useAuth } from './hook/useAuth'; // Hook pour récupérer les informations de l'utilisateur
+
+// ProtectedRoute : Vérifie si l'utilisateur a la permission nécessaire
+const ProtectedRoute = ({ element, requiredPermission }) => {
+  const { userPermissions } = useAuth(); // Supposons que `useAuth` récupère les permissions de l'utilisateur
+
+  // Si l'utilisateur n'a pas la permission requise, on le redirige vers la page de connexion
+  if (!userPermissions.includes(requiredPermission)) {
+    return <Navigate to="/connexion" />;
+  }
+
+  return element; // Si l'utilisateur a la permission, on affiche la route
+};
+
+export default ProtectedRoute;
