@@ -16,7 +16,7 @@ function Accueil() {
 
         <Link to="/quizz" className="link-button">
           <button type="button" className="button-quizz">
-            <strong>QUIZZ</strong>
+            <strong>QUIZ</strong>
           </button>
         </Link>
       </div>

@@ -49,7 +49,7 @@ const BurgerMenu = () => {
 
   const menuItems = [
     { text: "ACCUEIL", path: "/" },
-    { text: "QUIZZ", path: "/quizz" },
+    { text: "QUIZ", path: "/quizz" },
     { text: "NOS VINS", path: "/vins" },
     { text: "ÉVENEMENTS", path: "/evenements" },
     { text: "À propos de nous", path: "/aboutus" },
