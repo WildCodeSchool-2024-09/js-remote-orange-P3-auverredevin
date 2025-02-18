@@ -113,7 +113,18 @@ function Connexion() {
           color="primary"
           type="submit"
           sx={{ mt: 2, backgroundColor: "#9f0c00" }}
-          onClick={() => handleLogin(login, password)}
+          onClick={async (e) => {
+            e.preventDefault();
+            // Attendre la réponse de handleLogin
+            await handleLogin(login, password);
+
+            // Vérifier si l'utilisateur est authentifié après l'appel de handleLogin
+            if (isAuth) {
+              navigate("/utilisateur");
+            } else {
+              // Si la connexion échoue, tu peux afficher un message d'erreur ici
+            }
+          }}
         >
           Je me connecte
         </Button>
