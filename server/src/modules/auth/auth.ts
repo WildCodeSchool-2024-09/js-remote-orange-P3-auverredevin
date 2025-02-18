@@ -5,27 +5,39 @@ import jwt from "jsonwebtoken";
 import usersRepository from "../users/usersRepository";
 
 const SignIn: RequestHandler = async (req, res, next) => {
-  const { login } = req.body.values;
-  const { password } = req.body.values;
-
   try {
-    // Fetch all items
-    const user: { token?: string } = await usersRepository.checkuser(
-      login,
-      password,
-    );
-    if (!process.env.APP_SECRET) {
-      throw new Error("APP_SECRET is not defined");
+    const { login, password } = req.body.values; // Notez le .values ici
+
+    if (!login || !password) {
+      return res.status(400).json({ message: "Login et mot de passe requis" });
     }
-    const token = jwt.sign({ login: login }, process.env.APP_SECRET, {
-      expiresIn: "2 days",
+
+    const user = await usersRepository.checkuser(login, password);
+
+    if (!user) {
+      return res.status(401).json({ message: "Identifiants invalides" });
+    }
+
+    const token = jwt.sign(
+      {
+        user_id: user.user_id,
+        role_id: user.role_id,
+      },
+      process.env.APP_SECRET,
+      { expiresIn: "2 days" },
+    );
+
+    res.json({
+      token,
+      user: {
+        user_id: user.user_id,
+        role_id: user.role_id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+      },
+      message: "Connexion réussie",
     });
-    user.token = token;
-    // Respond with the items in JSON format
-    res.json(user);
-    return;
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
