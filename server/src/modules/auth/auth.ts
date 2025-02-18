@@ -6,7 +6,6 @@ import usersRepository from "../users/usersRepository";
 
 const SignIn: RequestHandler = async (req, res, next) => {
   try {
-    console.log("Données reçues:", req.body);
     const { login, password } = req.body;
 
     if (!login || !password) {
@@ -14,13 +13,12 @@ const SignIn: RequestHandler = async (req, res, next) => {
     }
 
     const user = await usersRepository.checkuser(login, password);
-    console.log("Utilisateur trouvé:", user);
 
     if (!user) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         message: "Login ou mot de passe incorrect",
         user: null,
-        token: null
+        token: null,
       });
     }
 
@@ -30,7 +28,7 @@ const SignIn: RequestHandler = async (req, res, next) => {
         role_id: user.role_id,
       },
       process.env.APP_SECRET,
-      { expiresIn: "2 days" }
+      { expiresIn: "2 days" },
     );
 
     return res.status(200).json({
@@ -40,16 +38,16 @@ const SignIn: RequestHandler = async (req, res, next) => {
         role_id: user.role_id,
         firstname: user.firstname,
         lastname: user.lastname,
-        login: user.login
+        login: user.login,
       },
-      message: "Connexion réussie"
+      message: "Connexion réussie",
     });
   } catch (err) {
     console.error("Erreur de connexion:", err);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: "Erreur serveur",
       user: null,
-      token: null
+      token: null,
     });
   }
 };

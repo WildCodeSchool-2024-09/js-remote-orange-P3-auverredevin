@@ -79,8 +79,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const handleLogin = async (login: string, password: string) => {
     try {
-      console.log("Tentative de connexion avec:", { login, password });
-  
       const response = await axios.post<LoginResponse>(
         `${import.meta.env.VITE_API_URL}/api/auth/signin`,
         { login, password }, // Simplification de la structure
@@ -88,12 +86,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
-  
-      console.log("Réponse du serveur:", response.data);
       const { data } = response;
-  
+
       if (data.token && data.user) {
         setIsAuth(true);
         setUser(data.user);
@@ -104,14 +100,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
         return true;
       }
-      
+
       setIsAuth(false);
       setMessage(data.message || "Échec de l'authentification");
       return false;
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     } catch (error: any) {
       console.error("Détails de l'erreur:", error.response?.data);
       setIsAuth(false);
-      setMessage(error.response?.data?.message || "Erreur de connexion au serveur");
+      setMessage(
+        error.response?.data?.message || "Erreur de connexion au serveur",
+      );
       return false;
     }
   };
