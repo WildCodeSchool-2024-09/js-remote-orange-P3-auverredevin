@@ -103,10 +103,16 @@ function Quizz() {
         .catch((error) => console.error(error));
     } else {
       const answersArray = Object.entries(selectedAnswers).map(
-        ([questionId, answerIds]) => ({
-          questionId: Number(questionId),
-          answerId: answerIds[0],
-        }),
+        ([questionId, answerIds]) => {
+          const answer = answers[Number(questionId)].find(
+            (a) => a.answer_id === answerIds[0],
+          );
+          return {
+            questionId: Number(questionId),
+            answerId: answerIds[0],
+            scoreValue: answer ? answer.score_value : 0,
+          };
+        },
       );
       setContextAnswers(answersArray);
       setShowResult(true);

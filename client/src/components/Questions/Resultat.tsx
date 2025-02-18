@@ -1,16 +1,14 @@
-// @ts-ignore
 import { useEffect, useState } from "react";
 import { useAnswers } from "../../Context/AnswersScore";
 
 interface Wine {
-  wine_id: number;
-  name: string;
-  img_url: string;
-  category: string;
+  img_url: string | undefined;
   origin: string;
   price: number;
   description: string | null;
   wine_url: string | null;
+  category: string;
+  name: string;
 }
 
 function Result() {
@@ -28,28 +26,57 @@ function Result() {
       .catch((error) => console.error(error));
   }, []);
 
+  const getScoreValue = (questionId: number, answerId: number): number => {
+    // Scores based on your answers table in the database
+    switch (questionId) {
+      case 1: // Type de vin
+        return answerId; // 1 for Rouge, 2 for Blanc, 3 for Rosé, 4 for Pétillant
+      case 2: // Price range
+        return answerId; // 1 for Léger, 2 for Modéré, 3 for Puissant
+      case 3: // Origin
+        return answerId; // 1 for Fruité, 2 for Sec, 3 for Sucré, 4 for Boisé
+      default:
+        return 0;
+    }
+  };
+
   const suggestWine = (wines: Wine[]) => {
-    // Filter wines based on selected answers
-    const filteredWines = wines.filter((wine) => {
-      return answers.every((answer) => {
+    let bestWine: Wine | null = null;
+    let highestScore = 0;
+
+    for (const wine of wines) {
+      let score = 0;
+
+      for (const answer of answers) {
+        const scoreValue = getScoreValue(answer.questionId, answer.answerId);
+
         switch (answer.questionId) {
           case 1:
-            return wine.category === getCategory(answer.answerId);
+            if (wine.category === getCategory(answer.answerId)) {
+              score += scoreValue;
+            }
+            break;
           case 2:
-            return wine.price <= getPriceRange(answer.answerId);
+            if (wine.price <= getPriceRange(answer.answerId)) {
+              score += scoreValue;
+            }
+            break;
           case 3:
-            return wine.origin === getOrigin(answer.answerId);
+            if (wine.origin === getOrigin(answer.answerId)) {
+              score += scoreValue;
+            }
+            break;
           default:
-            return true;
+            break;
         }
-      });
-    });
+      }
 
-    // Select a random wine from the filtered list
-    if (filteredWines.length > 0) {
-      const randomIndex = Math.floor(Math.random() * filteredWines.length);
-      setSuggestedWine(filteredWines[randomIndex]);
+      if (score > highestScore) {
+        highestScore = score;
+        bestWine = wine;
+      }
     }
+    setSuggestedWine(bestWine);
   };
 
   const getCategory = (answerId: number) => {
@@ -99,7 +126,7 @@ function Result() {
 
   return (
     <div>
-      <h1>Result</h1>
+      <h1>Résultat</h1>
       {suggestedWine ? (
         <div>
           <h2>{suggestedWine.name}</h2>

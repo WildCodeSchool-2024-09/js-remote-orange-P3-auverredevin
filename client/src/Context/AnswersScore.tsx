@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 interface IAnswer {
   questionId: number;
   answerId: number;
+  scoreValue: number;
 }
 
 interface IAnswersContext {
