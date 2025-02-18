@@ -1,3 +1,11 @@
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAnswers } from "../../Context/AnswersScore";
 
@@ -27,14 +35,11 @@ function Result() {
   }, []);
 
   const getScoreValue = (questionId: number, answerId: number): number => {
-    // Scores based on your answers table in the database
     switch (questionId) {
-      case 1: // Type de vin
-        return answerId; // 1 for Rouge, 2 for Blanc, 3 for Rosé, 4 for Pétillant
-      case 2: // Price range
-        return answerId; // 1 for Léger, 2 for Modéré, 3 for Puissant
-      case 3: // Origin
-        return answerId; // 1 for Fruité, 2 for Sec, 3 for Sucré, 4 for Boisé
+      case 1:
+      case 2:
+      case 3:
+        return answerId;
       default:
         return 0;
     }
@@ -125,33 +130,89 @@ function Result() {
   };
 
   return (
-    <div>
-      <h1>Résultat</h1>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        p: 4,
+      }}
+    >
       {suggestedWine ? (
-        <div>
-          <h2>{suggestedWine.name}</h2>
-          <img src={suggestedWine.img_url} alt={suggestedWine.name} />
-          <p>Origine : {suggestedWine.origin}</p>
-          <p>Catégorie : {suggestedWine.category}</p>
-          <p>Prix : {suggestedWine.price}€</p>
-          {suggestedWine.description && <p>{suggestedWine.description}</p>}
-          {suggestedWine.wine_url && (
-            <a
-              href={suggestedWine.wine_url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Voir le vin
-            </a>
-          )}
-        </div>
+        <Card
+          sx={{
+            maxWidth: 345,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: 2,
+            borderRadius: 2,
+            boxShadow: 3,
+          }}
+        >
+          <CardMedia
+            component="img"
+            height="200"
+            image={"../src/assets/images/logo.png"}
+            alt={suggestedWine?.name}
+            sx={{ borderRadius: 1, objectFit: "cover" }}
+          />
+          <CardContent sx={{ gap: 2, textAlign: "center" }}>
+            <Typography gutterBottom variant="h5" component="div">
+              {suggestedWine?.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Origine: {suggestedWine?.origin}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Catégorie: {suggestedWine?.category}
+            </Typography>
+            <Typography variant="h6" color="text.primary" align="center">
+              Prix: {suggestedWine?.price}€
+            </Typography>
+            {suggestedWine?.description && (
+              <Typography variant="body2" color="text.secondary">
+                {suggestedWine.description}
+              </Typography>
+            )}
+            {suggestedWine?.wine_url && (
+              <Button
+                variant="contained"
+                sx={{
+                  mt: 2,
+                  backgroundColor: "#9f0c00",
+                  ":hover": { backgroundColor: "#dd1e0d" },
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                }}
+                href={suggestedWine.wine_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Voir le vin
+              </Button>
+            )}
+          </CardContent>
+          <Button
+            variant="contained"
+            sx={{
+              mt: 2,
+              backgroundColor: "#9f0c00",
+              ":hover": { backgroundColor: "#dd1e0d" },
+              padding: "10px 20px",
+              fontSize: "16px",
+            }}
+            onClick={() => window.location.reload()}
+          >
+            Recommencer le quiz
+          </Button>
+        </Card>
       ) : (
-        <p>Aucun vin ne correspond à vos critères.</p>
+        <Typography variant="body1" color="text.secondary">
+          Aucun vin ne correspond à vos critères.
+        </Typography>
       )}
-      <button type="button" onClick={() => window.location.reload()}>
-        Recommencer le quiz
-      </button>
-    </div>
+    </Box>
   );
 }
 
