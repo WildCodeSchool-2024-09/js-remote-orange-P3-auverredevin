@@ -10,8 +10,6 @@ const PrivateRoutesAdmins = ({
 }: PrivateRoutesAdminsProps) => {
   const token = localStorage.getItem("token");
   const roleId = localStorage.getItem("role_id");
-  console.log("Token:", token);
-  console.log("Role ID:", roleId);
 
   if (!token) {
     return <Navigate to="/connexion" replace />;
