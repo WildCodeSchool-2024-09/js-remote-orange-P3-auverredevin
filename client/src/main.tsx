@@ -2,7 +2,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./hook/useAuth";
 /* ************************************************************************* */
 
@@ -17,7 +16,6 @@ import Inscription from "./pages/Inscription/Inscription";
 import LegalMentions from "./pages/LegalMentions/legalMention";
 import ListWine from "./pages/ListeVin/ListeVin";
 import NotFound from "./pages/NotFound/NotFound";
-import Profil from "./pages/Profil/Profil";
 import Quizz from "./pages/Quizz/Quizz";
 import Utilisateur from "./pages/Utilisateur/Utilisateur";
 import Welcome from "./pages/Welcome/Welcome";
@@ -28,6 +26,10 @@ import ListEventsBO from "./pages/BackOffice/ListEventsBO";
 import ListUsersBO from "./pages/BackOffice/ListUsersBO";
 import ListWinesBO from "./pages/BackOffice/ListWinesBO";
 import SuggestionsBO from "./pages/BackOffice/SuggestionsBO";
+
+import PrivateRoutesAdmins from "./components/PrivateRoutes/PrivateRoutesAdmins";
+// Import PrivateRoute component
+import PrivateRoutesUsers from "./components/PrivateRoutes/PrivateRoutesUsers";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -41,76 +43,43 @@ import SuggestionsBO from "./pages/BackOffice/SuggestionsBO";
 // You can add more routes as you build out your app!
 
 const router = createBrowserRouter([
+  { path: "/", element: <App /> },
+  { path: "/aboutus", element: <AboutUs /> },
+  { path: "/quizz", element: <Quizz /> },
+  { path: "/inscription", element: <Inscription /> },
+  { path: "/evenements", element: <Evenements /> },
+  { path: "/vins", element: <ListWine /> },
+  { path: "/welcome", element: <Welcome /> },
+  { path: "/connexion", element: <Connexion /> },
+  { path: "/legalmentions", element: <LegalMentions /> },
+  { path: "*", element: <NotFound /> },
+
+  // Routes Utilisateur
   {
-    path: "/",
-    element: <App />, // Page d'accueil
+    path: "/utilisateur",
+    element: <PrivateRoutesUsers component={Utilisateur} userOnly />,
   },
-  {
-    path: "/aboutus",
-    element: <AboutUs />, // Page à propos
-  },
-  {
-    path: "/quizz",
-    element: <Quizz />, // Page de quizz
-  },
-  {
-    path: "/inscription",
-    element: <Inscription />, // Page d'inscription
-  },
-  {
-    path: "/profil",
-    element: <Profil />, // Page de profil
-  },
-  {
-    path: "/evenements",
-    element: <Evenements />, // Page d'événements
-  },
-  {
-    path: "*",
-    element: <NotFound />, // Page 404
-  },
-  {
-    path: "/vins",
-    element: <ListWine />, // Liste des vins
-  },
-  // Routes Back-Office protégées avec PrivateRoute
+
+  // Routes Back-Office (Admins uniquement)
   {
     path: "/backoffice",
-    element: (
-      <PrivateRoute component={IndexBackOffice} isAuthenticated={true} />
-    ), // Backoffice
+    element: <PrivateRoutesAdmins component={IndexBackOffice} adminOnly />,
   },
   {
     path: "/suggestionsBO",
-    element: <PrivateRoute component={SuggestionsBO} isAuthenticated={true} />, // Backoffice suggestions
+    element: <PrivateRoutesAdmins component={SuggestionsBO} adminOnly />,
   },
   {
     path: "/vinsBO",
-    element: <PrivateRoute component={ListWinesBO} isAuthenticated={true} />, // Backoffice vins
+    element: <PrivateRoutesAdmins component={ListWinesBO} adminOnly />,
   },
   {
     path: "/evenementsBO",
-    element: <PrivateRoute component={ListEventsBO} isAuthenticated={true} />, // Backoffice événements
+    element: <PrivateRoutesAdmins component={ListEventsBO} adminOnly />,
   },
   {
     path: "/utilisateursBO",
-    element: <PrivateRoute component={ListUsersBO} isAuthenticated={true} />, // Backoffice utilisateurs
-  },
-  {
-    path: "/welcome", // Page de bienvenue
-    element: <Welcome />,
-  },
-  {
-    path: "/connexion", // Page de connexion
-    element: <Connexion />,
-  },
-  {
-    path: "/legalmentions",
-    element: <LegalMentions />, // Page de mentions légales
-  },
-  {
-    path: "/utilisateur",
-    element: <PrivateRoute component={Utilisateur} isAuthenticated={true} />,
+    element: <PrivateRoutesAdmins component={ListUsersBO} adminOnly />,
   },
 ]);
 
