@@ -15,6 +15,7 @@ import Evenements from "./pages/Evenements/Evenements";
 import Inscription from "./pages/Inscription/Inscription";
 import LegalMentions from "./pages/LegalMentions/legalMention";
 import ListWine from "./pages/ListeVin/ListeVin";
+import NotAuthorized from "./pages/NotAuthorized/NotAuthorized";
 import NotFound from "./pages/NotFound/NotFound";
 import Quizz from "./pages/Quizz/Quizz";
 import Utilisateur from "./pages/Utilisateur/Utilisateur";
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
   { path: "/welcome", element: <Welcome /> },
   { path: "/connexion", element: <Connexion /> },
   { path: "/legalmentions", element: <LegalMentions /> },
+  { path: "/not-authorized", element: <NotAuthorized /> },
   { path: "*", element: <NotFound /> },
 
   // Routes Utilisateur
