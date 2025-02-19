@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import NavBar from "../../components/NavBar/NavBar";
 
@@ -16,9 +16,9 @@ interface User {
   firstname: string;
   lastname: string;
   user_id: string;
-  role_id: string;
+  role_id: number;
   login: string;
-  avatar?: string; // Ajout de l'avatar
+  avatar?: string;
 }
 
 const avatars = [
@@ -36,7 +36,9 @@ function Utilisateur() {
     const userData = localStorage.getItem("user");
     if (userData) {
       try {
-        setUser(JSON.parse(userData));
+        const parsedUser = JSON.parse(userData);
+        parsedUser.role_id = Number(parsedUser.role_id);
+        setUser(parsedUser);
       } catch (error) {
         console.error("Erreur lors du parsing des données utilisateur", error);
       }
@@ -46,6 +48,7 @@ function Utilisateur() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("role_id");
     navigate("/");
   };
 
@@ -164,6 +167,27 @@ function Utilisateur() {
               />
             </Button>
           </Dialog>
+
+          {/* Bouton vers le BackOffice si l'utilisateur est admin */}
+          {user?.role_id === 1 && (
+            <Box display="flex" justifyContent="center" sx={{ mt: 1 }}>
+              <Link to="/backoffice" style={{ textDecoration: "none" }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    width: "220px",
+                    height: "60px",
+                    borderRadius: "1%",
+                    backgroundColor: "#9f0c00",
+                    "&:hover": { backgroundColor: "#dd1e0d" },
+                  }}
+                >
+                  Index BackOffice
+                </Button>
+              </Link>
+            </Box>
+          )}
 
           <Button
             variant="contained"
