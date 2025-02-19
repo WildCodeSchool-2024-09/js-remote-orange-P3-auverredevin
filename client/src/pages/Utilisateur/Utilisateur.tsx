@@ -53,61 +53,73 @@ function Utilisateur() {
   return (
     <div>
       <NavBar />
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        {user ? (
-          <div>
-            <h1>
-              <strong>Bonjour {user.firstname}</strong>
-            </h1>
-            <Avatar
-              src={user.avatar || "/default-avatar.png"}
-              sx={{
-                width: 200,
-                height: 200,
-                margin: "auto",
-                cursor: "pointer",
-              }}
-              onClick={() => setOpen(true)}
-            />
-          </div>
-        ) : (
-          <p>Chargement des informations...</p>
-        )}
-      </div>
-
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+      <Box
+        sx={{
+          width: "90%",
+          maxWidth: 600,
+          padding: 3,
+          backgroundColor: "#f9f1f1",
+          boxShadow: 5,
+          borderRadius: 3,
+          display: "flex",
+          flexDirection: "column",
+          margin: "0 auto",
+          marginTop: "20px",
+        }}
       >
-        {/* Modale de sélection d'avatar */}
-        <Dialog open={open} onClose={() => setOpen(false)}>
-          <DialogTitle>Changer d'Avatar</DialogTitle>
-          <Grid container spacing={2} padding={2}>
-            {avatars.map((avatar) => (
-              <Grid item key={avatar}>
-                <Avatar
-                  src={avatar}
-                  sx={{ width: 80, height: 80, cursor: "pointer" }}
-                  onClick={() => handleAvatarSelect(avatar)}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Dialog>
-        <Box
-          display="grid"
-          gridTemplateColumns="repeat(2, 1fr)"
-          gridTemplateRows="repeat(2, 1fr)"
-          gap={1}
-          sx={{ width: "300px", height: "300px" }}
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          {user ? (
+            <div>
+              <h1>
+                <strong>Bonjour {user.firstname}</strong>
+              </h1>
+              <Avatar
+                src={user.avatar || "/default-avatar.png"}
+                sx={{
+                  width: 200,
+                  height: 200,
+                  margin: "auto",
+                  cursor: "pointer",
+                }}
+                onClick={() => setOpen(true)}
+              />
+            </div>
+          ) : (
+            <p>Chargement des informations...</p>
+          )}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
         >
+          {/* Modale de sélection d'avatar */}
+          <Dialog open={open} onClose={() => setOpen(false)}>
+            <DialogTitle>Changer d'Avatar</DialogTitle>
+            <Grid container spacing={2} padding={2}>
+              {avatars.map((avatar) => (
+                <Grid item key={avatar}>
+                  <Avatar
+                    src={avatar}
+                    sx={{ width: 80, height: 80, cursor: "pointer" }}
+                    onClick={() => handleAvatarSelect(avatar)}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Dialog>
+
           <Button
             variant="contained"
             color="primary"
             sx={{
               backgroundColor: "#9f0c00",
               "&:hover": { backgroundColor: "#dd1e0d" },
-              width: "110px",
-              height: "110px",
+              width: "220px",
+              height: "60px",
               borderRadius: "1%",
               boxShadow: "0 0 5px #9f0c00",
             }}
@@ -115,51 +127,8 @@ function Utilisateur() {
           >
             Déconnexion
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#9f0c00",
-              "&:hover": { backgroundColor: "#dd1e0d" },
-              width: "110px",
-              height: "110px",
-              borderRadius: "1%",
-              boxShadow: "0 0 5px #9f0c00",
-            }}
-            onClick={() => setOpen(true)}
-          >
-            Choisir Avatar
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#9f0c00",
-              "&:hover": { backgroundColor: "#dd1e0d" },
-              width: "110px",
-              height: "110px",
-              borderRadius: "1%",
-              boxShadow: "0 0 5px #9f0c00",
-            }}
-          >
-            Bouton 3
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#9f0c00",
-              "&:hover": { backgroundColor: "#dd1e0d" },
-              width: "110px",
-              height: "110px",
-              borderRadius: "1%",
-              boxShadow: "0 0 5px #9f0c00",
-            }}
-          >
-            Bouton 4
-          </Button>
-        </Box>
-      </div>
+        </div>
+      </Box>
       <Footer />
     </div>
   );

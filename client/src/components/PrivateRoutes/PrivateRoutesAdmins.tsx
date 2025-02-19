@@ -11,8 +11,6 @@ const PrivateRoutesAdmins = ({
   adminOnly,
 }: PrivateRoutesAdminsProps) => {
   const { isAuth, user } = useAuth();
-  const token = localStorage.getItem("token");
-  const roleId = localStorage.getItem("role_id");
 
   if (!isAuth) {
     return <Navigate to="/connexion" replace />;
