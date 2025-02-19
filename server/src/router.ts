@@ -30,6 +30,8 @@ router.delete("/api/wines/:id", wineActions.destroy);
 router.get("/api/tastings", tastingActions.browse);
 router.get("/api/tastings/:id", tastingActions.read);
 router.post("/api/tastings", tastingActions.add);
+router.put("/api/tastings/:id", tastingActions.edit);
+router.delete("/api/tastings/:id", tastingActions.destroy);
 
 router.get("/api/users", userActions.browse);
 router.get("/api/users/:id", userActions.read);
