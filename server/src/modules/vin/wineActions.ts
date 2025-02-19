@@ -48,6 +48,7 @@ const edit: RequestHandler = async (req, res, next) => {
       origin: req.body.origin,
       price: req.body.price,
       description: req.body.description,
+      wine_url: req.body.wine_url,
     };
 
     const affectedRows = await wineRepository.update(Wine);
@@ -75,6 +76,7 @@ const add: RequestHandler = async (req, res, next) => {
       origin: req.body.origin,
       price: req.body.price,
       description: req.body.description,
+      wine_url: req.body.wine_url,
     };
 
     const insertId = await wineRepository.create(newWine);

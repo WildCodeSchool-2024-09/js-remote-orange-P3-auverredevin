@@ -15,6 +15,7 @@ type Suggestion = {
   creation_date: string;
   modification_date: string;
   user_id: number;
+  wine_url: string | null;
 };
 
 class SuggestionRepository {
@@ -31,8 +32,8 @@ class SuggestionRepository {
     );
 
     const [result] = await databaseClient.query<Result>(
-      `INSERT INTO suggestion (user_id, name, price, origin, description, creation_date, modification_date) 
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO suggestion (user_id, name, price, origin, description, creation_date, modification_date, wine_url) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         suggestion.user_id || null, // Allow user_id to be null
         suggestion.name,
@@ -41,6 +42,7 @@ class SuggestionRepository {
         suggestion.description,
         formattedCreationDate,
         formattedModificationDate,
+        suggestion.wine_url,
       ],
     );
 
@@ -68,13 +70,14 @@ class SuggestionRepository {
 
   async update(suggestion: Suggestion) {
     await databaseClient.query<Result>(
-      "UPDATE suggestion SET name = ?, price = ?, origin = ?, description = ?, modification_date = ? WHERE suggestion_id = ?",
+      "UPDATE suggestion SET name = ?, price = ?, origin = ?, description = ?, modification_date = ?, wine_url = ? WHERE suggestion_id = ?",
       [
         suggestion.name,
         suggestion.price,
         suggestion.origin,
         suggestion.description,
         suggestion.modification_date,
+        suggestion.wine_url,
         suggestion.suggestion_id,
       ],
     );
