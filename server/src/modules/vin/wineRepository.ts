@@ -55,8 +55,16 @@ class wineRepository {
   async update(wine: Wine) {
     // Execute the SQL UPDATE query to update an existing wine in the "wine" table
     const [result] = await databaseClient.query<Result>(
-      "update wine set name = ? where wine_id = ?",
-      [wine.name, wine.wine_id],
+      "update wine set name = ?, img_url = ?, category = ?, origin = ?, price = ?, description = ? where wine_id = ?",
+      [
+        wine.name,
+        wine.img_url,
+        wine.category,
+        wine.origin,
+        wine.price,
+        wine.description,
+        wine.wine_id
+      ]
     );
 
     // Return how many rows were affected
