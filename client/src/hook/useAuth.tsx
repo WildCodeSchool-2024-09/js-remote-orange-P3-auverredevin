@@ -68,35 +68,50 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   interface LoginResponse {
     token: string;
-    user: string;
+    user: {
+      user_id: number;
+      role_id: number;
+      firstname: string;
+      lastname: string;
+    };
     message: string;
   }
 
   const handleLogin = async (login: string, password: string) => {
-    if (login === null || password === null) {
-      //setMessage('Veuillez saisir les datas');
-      return;
-    }
-
-    const values = { login: login, password: password };
-    const { data } = await axios.post<LoginResponse>(
-      `${import.meta.env.VITE_API_URL}/api/auth/signin`,
-      {
-        method: "POST",
-        values: values,
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      const response = await axios.post<LoginResponse>(
+        `${import.meta.env.VITE_API_URL}/api/auth/signin`,
+        { login, password }, // Simplification de la structure
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      },
-    );
+      );
+      const { data } = response;
 
-    if (data.token) {
-      setIsAuth(true);
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-    } else {
+      if (data.token && data.user) {
+        setIsAuth(true);
+        setUser(data.user);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        if (data.user.role_id) {
+          localStorage.setItem("role_id", data.user.role_id.toString());
+        }
+        return true;
+      }
+
       setIsAuth(false);
-      setMessage(data.message || "Password erronné");
+      setMessage(data.message || "Échec de l'authentification");
+      return false;
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    } catch (error: any) {
+      console.error("Détails de l'erreur:", error.response?.data);
+      setIsAuth(false);
+      setMessage(
+        error.response?.data?.message || "Erreur de connexion au serveur",
+      );
+      return false;
     }
   };
 
@@ -106,19 +121,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const currentUser = async () => {
     const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
 
     if (token) {
-      // Test de connexion back
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/auth/check`,
-        {
-          headers: { token: token },
-        },
-      );
+      try {
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/auth/check`,
+          {
+            headers: { token: token },
+          },
+        );
 
-      setIsAuth((data as { check: boolean })?.check);
-      // setUser((data as { user: array })?.user);
-      if (!(data as { check: boolean })?.check) {
+        if ((data as { check: boolean })?.check) {
+          setIsAuth(true);
+          if (storedUser) {
+            setUser(JSON.parse(storedUser));
+          }
+        } else {
+          await handleClean();
+        }
+      } catch (error) {
         await handleClean();
       }
     } else {
@@ -128,7 +150,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const handleClean = async () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setIsAuth(false);
+    setUser(null);
   };
 
   useEffect(() => {
