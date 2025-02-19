@@ -34,6 +34,7 @@ interface Suggestion {
   description: string;
   creation_date: string;
   modification_date: string;
+  wine_url: string | null;
 }
 
 function SuggestionsBO() {
@@ -131,7 +132,8 @@ function SuggestionsBO() {
       suggestion.origin &&
       suggestion.category &&
       suggestion.img_url &&
-      suggestion.description
+      suggestion.description &&
+      suggestion.wine_url
     ) {
       try {
         await axios.post("http://localhost:3310/api/wines", {
@@ -141,6 +143,7 @@ function SuggestionsBO() {
           category: suggestion.category,
           img_url: suggestion.img_url,
           description: suggestion.description,
+          wine_url: suggestion.wine_url,
         });
         alert("Vin ajouté avec succès !");
       } catch (error) {
@@ -168,6 +171,7 @@ function SuggestionsBO() {
               <TableCell>Catégorie</TableCell>
               <TableCell>Image</TableCell>
               <TableCell>Description</TableCell>
+              <TableCell>URL du Vin</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -210,6 +214,11 @@ function SuggestionsBO() {
                 <TableCell>
                   {suggestion.description || (
                     <span style={{ color: "red" }}>Description manquante</span>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {suggestion.wine_url || (
+                    <span style={{ color: "red" }}>URL manquante</span>
                   )}
                 </TableCell>
                 <TableCell>
@@ -328,6 +337,20 @@ function SuggestionsBO() {
               setEditSuggestion(
                 editSuggestion
                   ? { ...editSuggestion, description: e.target.value }
+                  : null,
+              )
+            }
+            margin="normal"
+            required
+          />
+          <TextField
+            label="URL du Vin"
+            fullWidth
+            value={editSuggestion?.wine_url || ""}
+            onChange={(e) =>
+              setEditSuggestion(
+                editSuggestion
+                  ? { ...editSuggestion, wine_url: e.target.value }
                   : null,
               )
             }

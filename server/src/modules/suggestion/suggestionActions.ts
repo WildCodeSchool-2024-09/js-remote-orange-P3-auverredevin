@@ -43,6 +43,7 @@ const add: RequestHandler = async (req, res, next) => {
       price: req.body.price,
       origin: req.body.origin,
       description: req.body.description,
+      wine_url: req.body.wine_url,
       creation_date: new Date().toISOString().slice(0, 19).replace("T", " "), // Format: YYYY-MM-DD HH:MM:SS
       modification_date: new Date().toISOString(),
       user_id: req.body.user_id, // Added user_id property
@@ -64,6 +65,7 @@ const edit: RequestHandler = async (req, res, next) => {
       price: req.body.price,
       origin: req.body.origin,
       description: req.body.description,
+      wine_url: req.body.wine_url,
       creation_date: req.body.creation_date,
       modification_date: new Date().toISOString(),
       user_id: req.body.user_id,
