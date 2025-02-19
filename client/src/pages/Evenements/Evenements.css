@@ -1,0 +1,38 @@
+.form-control {
+  margin: 8px;
+  min-width: 200px;
+}
+
+.button {
+  margin: 8px;
+}
+
+.table-container {
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 63.24vh;
+  max-width: 80%;
+}
+
+.table-cell-sortable {
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .form-control {
+    min-width: 100%;
+  }
+
+  .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+  }
+
+  .table-cell-sortable {
+    font-size: 0.9em;
+  }
+}

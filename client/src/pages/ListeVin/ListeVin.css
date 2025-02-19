@@ -1,0 +1,82 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3vh;
+}
+
+.cards-wine {
+  margin: 10px;
+  padding: 10px;
+  width: 300px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  border: #8b1818 solid;
+  background-color: white;
+  overflow: hidden;
+}
+
+.cards-wines {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cards-wine img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  max-width: 12rem;
+}
+
+.cards-wine h3 {
+  font-size: 1rem;
+  color: #8b1818;
+}
+
+.cards-wine p {
+  font-size: 0.8rem;
+  color: #000000;
+}
+
+.add-wine-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px dashed #8b1818;
+  color: #8b1818;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-content button {
+  margin-top: 10px;
+}
+.add-wine-card:hover {
+  background-color: bisque;
+  cursor: pointer;
+}

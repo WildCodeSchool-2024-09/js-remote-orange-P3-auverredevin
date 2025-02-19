@@ -1,0 +1,185 @@
+.connecter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2vw;
+  max-width: 100vw;
+  min-height: 100vw;
+}
+
+h1 {
+  font-size: auto;
+  margin: 2vw 0;
+}
+
+.avatar {
+  margin: 2vw 0;
+}
+
+.avatar img {
+  border-radius: 50%;
+  width: 20vw;
+  height: 20vw;
+  object-fit: cover;
+}
+
+.case {
+  display: flex;
+  flex-direction: column;
+  width: 35vw;
+  gap: 2vw;
+}
+
+.case input[type="text"] {
+  padding: 2vw;
+  border: none;
+  background-color: #8b1818;
+  color: white;
+  border-radius: 1.5vw;
+  font-size: 1.5vw;
+}
+
+.case input[type="email"] {
+  padding: 2vw;
+  border: none;
+  background-color: #8b1818;
+  color: white;
+  border-radius: 1.5vw;
+  font-size: 1.5vw;
+}
+
+.case input[type="password"] {
+  padding: 2vw;
+  border: none;
+  background-color: #8b1818;
+  color: white;
+  border-radius: 1.5vw;
+  font-size: 1.5vw;
+}
+
+.case input::placeholder {
+  color: white;
+}
+
+.newsletter {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  margin: 1vw 0;
+  font-size: 1.9vw;
+  color: #000000;
+}
+
+button {
+  background-color: #8b1818;
+  color: white;
+  border: none;
+  padding: 1vw 2vw;
+  border-radius: 0.5vw;
+  cursor: pointer;
+  font-size: 2vw;
+  margin: 1vw 0;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 4vw;
+  margin: 4vw 0;
+  margin-bottom: 0vw;
+}
+
+.navigation a {
+  color: black;
+  text-decoration: none;
+  font-size: 2vw;
+}
+
+footer {
+  text-align: center;
+  margin-top: 2vw;
+  font-size: 1.75vw;
+}
+
+.btn-inscription {
+  margin-inline-start: 11vw;
+}
+
+.ul_footer {
+  margin-top: -10vw;
+  padding-top: 0;
+}
+
+.logo_footer {
+  margin-top: -5vw;
+  padding-top: 0;
+}
+
+.footer p {
+  margin-top: 2vw;
+}
+
+.MuiBox-root {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .connecter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10vw 5vw;
+    gap: 4vw;
+  }
+
+  h1 {
+    font-size: 8vw;
+  }
+
+  .avatar {
+    margin: 0;
+  }
+
+  .avatar img {
+    width: 40vw;
+    height: 40vw;
+  }
+
+  .newsletter {
+    display: flex;
+    align-items: center;
+    font-size: 4vw;
+    gap: 2vw;
+  }
+
+  .case {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70vw;
+    gap: 3vw;
+  }
+
+  .case input[type="text"],
+  .case input[type="email"],
+  .case input[type="password"] {
+    font-size: 5vw;
+    padding: 3vw;
+    width: 100%;
+    border-radius: 1.5vw;
+  }
+
+  button {
+    padding: 3vw 5vw;
+    font-size: 4vw;
+    border-radius: 1vw;
+    width: auto;
+    margin: 0 auto;
+    display: block;
+    left: -4vw;
+  }
+}
