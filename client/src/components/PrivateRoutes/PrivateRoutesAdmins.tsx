@@ -1,5 +1,4 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../hook/useAuth";
 
 interface PrivateRoutesAdminsProps {
   component: React.ComponentType<unknown>;
@@ -8,18 +7,12 @@ interface PrivateRoutesAdminsProps {
 
 const PrivateRoutesAdmins = ({
   component: Component,
-  adminOnly,
 }: PrivateRoutesAdminsProps) => {
   const { isAuth, user } = useAuth();
+  const roleId = localStorage.getItem("role_id");
 
-  if (!isAuth) {
-    return <Navigate to="/connexion" replace />;
-  }
-
-  const userObj = typeof user === "string" ? JSON.parse(user) : user;
-
-  if (adminOnly && userObj?.role_id !== 1) {
-    return <Navigate to="/not-authorized" replace />;
+  if (roleId !== "1") {
+    return <Navigate to={roleId ? "/not-authorized" : "/connexion"} replace />;
   }
 
   return <Component />;
