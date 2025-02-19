@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 
-interface Wine {
+export interface Wine {
   wine_id: number;
   name: string;
   img_url: string;
