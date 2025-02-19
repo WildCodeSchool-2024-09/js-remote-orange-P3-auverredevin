@@ -1,20 +1,36 @@
 import "./NavBar.css";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
+  Avatar,
+  Box,
+  Button,
   Drawer,
   IconButton,
   List,
   ListItem,
   ListItemText,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function NavBar() {
-  // Vérifier si un token existe dans le localStorage
   const token = localStorage.getItem("token");
+  const [user, setUser] = useState<{
+    firstname: string;
+    avatar?: string;
+    login: string;
+  } | null>(null);
 
-  // Fonction de déconnexion
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData));
+      } catch (error) {
+        console.error("Erreur lors du parsing des données utilisateur", error);
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -27,20 +43,57 @@ function NavBar() {
         </div>
         <div className="connexion">
           {token ? (
-            <Link to="/utilisateur">
-              <button
-                type="button"
-                className="button-connexion"
-                style={{ width: "110%" }}
+            <Link
+              to="/utilisateur"
+              className="user-info"
+              style={{ textDecoration: "none" }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  backgroundColor: "bisque",
+                  padding: "10px 20px", // Increased padding for larger size
+                  borderRadius: "5px",
+                  boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+                }}
               >
-                <strong>Mon compte</strong>
-              </button>
+                {/* Avatar sans bord arrondi */}
+                <Avatar
+                  src={user?.avatar || "/default-avatar.png"}
+                  variant="square"
+                  sx={{ width: 40, height: 40 }}
+                />
+                {/* Bouton de gestion de compte */}
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#9f0c00",
+                    "&:hover": { backgroundColor: "#dd1e0d" },
+                    color: "white",
+                    fontWeight: "bold",
+                    textTransform: "none",
+                  }}
+                >
+                  {user?.login &&
+                    `${user.login.charAt(0).toUpperCase()}${user.login.slice(1)}`}
+                </Button>
+              </Box>
             </Link>
           ) : (
             <Link to="/connexion">
-              <button type="button" className="button-connexion">
-                <strong>Connexion</strong>
-              </button>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#9f0c00",
+                  "&:hover": { backgroundColor: "#dd1e0d" },
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+              >
+                Connexion
+              </Button>
             </Link>
           )}
         </div>

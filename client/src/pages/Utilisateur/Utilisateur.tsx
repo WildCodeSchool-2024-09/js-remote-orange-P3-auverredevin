@@ -1,4 +1,12 @@
-import { Avatar, Box, Button, Dialog, DialogTitle, Grid } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
@@ -50,6 +58,21 @@ function Utilisateur() {
     }
   };
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result && user) {
+          const updatedUser = { ...user, avatar: reader.result as string };
+          setUser(updatedUser);
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div>
       <NavBar />
@@ -88,11 +111,15 @@ function Utilisateur() {
             <p>Chargement des informations...</p>
           )}
         </div>
+        <Typography variant="body1" align="center" sx={{ marginTop: "10px" }}>
+          Changez d'avatar en cliquant sur l'image
+        </Typography>
 
         <div
           style={{
             display: "flex",
-            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
             marginTop: "20px",
           }}
         >
@@ -110,6 +137,32 @@ function Utilisateur() {
                 </Grid>
               ))}
             </Grid>
+
+            <Button
+              variant="contained"
+              component="label"
+              sx={{
+                backgroundColor: "#9f0c00",
+                "&:hover": { backgroundColor: "#dd1e0d" },
+                color: "white",
+                fontWeight: "bold",
+                textTransform: "none",
+                marginTop: "10px",
+                maxWidth: "80%",
+                display: "block",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginBottom: "10px",
+              }}
+            >
+              Upload File
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileUpload}
+                hidden
+              />
+            </Button>
           </Dialog>
 
           <Button
@@ -122,6 +175,7 @@ function Utilisateur() {
               height: "60px",
               borderRadius: "1%",
               boxShadow: "0 0 5px #9f0c00",
+              marginTop: "10px",
             }}
             onClick={handleLogout}
           >
