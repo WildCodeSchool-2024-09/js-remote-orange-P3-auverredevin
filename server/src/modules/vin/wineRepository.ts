@@ -10,13 +10,14 @@ interface Wine {
   origin: string | null;
   price: number;
   description: string | null;
+  wine_url: string | null;
 }
 class wineRepository {
   // The C of CRUD - Create operation
 
   async create(wine: Omit<Wine, "wine_id">) {
     const [result] = await databaseClient.query<Result>(
-      "insert into wine (name, img_url, category, origin, price, description) values (?, ?, ?, ?, ?, ?)",
+      "insert into wine (name, img_url, category, origin, price, description, wine_url) values (?, ?, ?, ?, ?, ?, ?)",
       [
         wine.name,
         wine.img_url,
@@ -24,6 +25,7 @@ class wineRepository {
         wine.origin,
         wine.price,
         wine.description,
+        wine.wine_url,
       ],
     );
 
@@ -55,8 +57,17 @@ class wineRepository {
   async update(wine: Wine) {
     // Execute the SQL UPDATE query to update an existing wine in the "wine" table
     const [result] = await databaseClient.query<Result>(
-      "update wine set name = ? where wine_id = ?",
-      [wine.name, wine.wine_id],
+      "update wine set name = ?, img_url = ?, category = ?, origin = ?, price = ?, description = ?, wine_url = ? where wine_id = ?",
+      [
+        wine.name,
+        wine.img_url,
+        wine.category,
+        wine.origin,
+        wine.price,
+        wine.description,
+        wine.wine_url,
+        wine.wine_id,
+      ],
     );
 
     // Return how many rows were affected

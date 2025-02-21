@@ -1,6 +1,6 @@
-import databaseClient from "../../../database/client";
-
+import bcrypt from "bcryptjs";
 import type { ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import databaseClient from "../../../database/client";
 
 type Result = ResultSetHeader;
 type Rows = RowDataPacket[];
@@ -57,13 +57,35 @@ class UsersRepository {
 
   // The Rs of CRUD - Read operations
 
-  async checkuser(login: string, password: string) {
-    const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM user WHERE login = ? AND password = ?",
-      [login, password],
-    );
+  async checkuser(login: string, password: string): Promise<User | undefined> {
+    try {
+      // Modifions la requête pour récupérer tous les champs nécessaires
+      const [rows] = await databaseClient.query<Rows>(
+        `SELECT user_id, login, password, role_id, firstname, lastname, email 
+         FROM user 
+         WHERE login = ?`,
+        [login],
+      );
 
-    return rows[0] as User;
+      if (rows.length === 0) {
+        return undefined;
+      }
+
+      const user = rows[0] as User;
+
+      // Vérifions si le mot de passe est stocké en clair ou hashé
+      const passwordMatch =
+        password === user.password ||
+        (await bcrypt.compare(password, user.password));
+
+      if (!passwordMatch) {
+        return undefined;
+      }
+      return user;
+    } catch (error) {
+      console.error("Erreur dans checkuser:", error);
+      throw error;
+    }
   }
 
   async readAll() {

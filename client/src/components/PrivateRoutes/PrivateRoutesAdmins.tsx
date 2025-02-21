@@ -8,15 +8,10 @@ interface PrivateRoutesAdminsProps {
 const PrivateRoutesAdmins = ({
   component: Component,
 }: PrivateRoutesAdminsProps) => {
-  const token = localStorage.getItem("token");
   const roleId = localStorage.getItem("role_id");
 
-  if (!token) {
-    return <Navigate to="/connexion" replace />;
-  }
-
   if (roleId !== "1") {
-    return <Navigate to="/not-authorized" replace />;
+    return <Navigate to={roleId ? "/not-authorized" : "/connexion"} replace />;
   }
 
   return <Component />;
